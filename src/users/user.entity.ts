@@ -12,6 +12,7 @@ import {
 } from 'sequelize-typescript';
 import { Gender } from './../shared/enum/gender';
 import { Post } from './../posts/post.entity';
+import { Comment } from './../comments/comment.entity';
 
 @Table({
     tableName: 'user',
@@ -58,4 +59,7 @@ export class User extends Model<User> {
 
     @HasMany(() => Post)
     posts: Post[];
+
+    @HasMany(() => Comment)
+    comments: Comment[];
 }
