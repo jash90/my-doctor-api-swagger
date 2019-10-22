@@ -4,9 +4,7 @@ import { AppModule } from './../src/app.module';
 import { INestApplication, ValidationPipe, HttpStatus } from '@nestjs/common';
 import { Sequelize } from 'sequelize-typescript';
 import { ConfigService } from './../src/shared/config/config.service';
-import { Post } from './../src/posts/post.entity';
 import { User } from './../src/users/user.entity';
-import { Comment } from './../src/comments/comment.entity';
 import {
     createUserDto1,
     createUserDto2,
@@ -36,7 +34,7 @@ describe('/', () => {
                             configService.sequelizeOrmConfig,
                         );
 
-                        sequelize.addModels([User, Post, Comment]);
+                        sequelize.addModels([User]);
 
                         return sequelize;
                     },

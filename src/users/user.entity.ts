@@ -11,8 +11,6 @@ import {
     HasMany,
 } from 'sequelize-typescript';
 import { Gender } from '../shared/enum/enums';
-import { Post } from './../posts/post.entity';
-import { Comment } from './../comments/comment.entity';
 
 @Table({
     tableName: 'user',
@@ -56,10 +54,4 @@ export class User extends Model<User> {
     @DeletedAt
     @Column({ field: 'deleted_at' })
     deletedAt: Date;
-
-    @HasMany(() => Post)
-    posts: Post[];
-
-    @HasMany(() => Comment)
-    comments: Comment[];
 }
