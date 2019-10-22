@@ -6,7 +6,7 @@ export class ScheduleDto {
     readonly id: number;
 
     @ApiModelProperty()
-    readonly doctorId: string;
+    readonly doctorId: number;
 
     @ApiModelProperty()
     readonly doctorFirstName: string;

@@ -10,4 +10,4 @@ import { schedulesProviders } from './schedules.providers';
     providers: [SchedulesService, ...schedulesProviders],
     exports: [],
 })
-export class PantientsModule {}
+export class SchedulesModule {}

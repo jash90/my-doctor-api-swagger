@@ -12,8 +12,10 @@ import {
     UpdatedAt,
     DeletedAt,
     BelongsTo,
+    HasMany,
 } from 'sequelize-typescript';
 import { Specialist, Gender } from 'src/shared/enum/enums';
+import { Schedule } from 'src/schedules/schedule.entity';
 
 @Table({
     tableName: 'doctor',
@@ -52,4 +54,7 @@ export class Doctor extends Model<Doctor> {
     @DeletedAt
     @Column({ field: 'deleted_at' })
     deletedAt: Date;
+
+    @HasMany(() => Schedule)
+    schedules: Schedule[];
 }

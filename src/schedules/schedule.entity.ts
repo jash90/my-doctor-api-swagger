@@ -28,12 +28,12 @@ export class Schedule extends Model<Schedule> {
     id: number;
 
     @ForeignKey(() => Doctor)
-    @Column({ type: DataType.UUID, field: 'doctor_id' })
-    doctorId: string;
-
-    @Column
+    @Column({ type: DataType.BIGINT, field: 'doctor_id' })
+    doctorId: number;
+   
     @Min(0)
     @Max(6)
+    @Column
     dayOfWeek: number;
 
     @Column(DataType.TIME)
