@@ -8,20 +8,15 @@ export class DoctorDto {
     readonly id: number;
 
     @ApiModelProperty()
-    @IsString()
-    @Length(7)
     readonly numberPwz: string;
 
     @ApiModelProperty()
-    @IsString()
     readonly firstName: string;
 
     @ApiModelProperty()
-    @IsString()
     readonly lastName: string;
 
     @ApiModelProperty()
-    @IsEnum(Specialist)
     readonly specialization: Specialist;
 
     @ApiModelProperty()
