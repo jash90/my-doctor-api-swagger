@@ -13,24 +13,15 @@ import {
     DeletedAt,
     BelongsTo,
 } from 'sequelize-typescript';
-import { Specialist, Gender } from 'src/shared/enum/enums';
 
 @Table({
-    tableName: 'doctor',
+    tableName: 'pantient',
 })
-export class Doctor extends Model<Doctor> {
+export class Pantient extends Model<Pantient> {
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.BIGINT)
     id: number;
-
-    @Length({
-        min: 7, max: 7,
-        msg: `The length of comment must be 7.`,
-    })
-    @Unique
-    @Column
-    numberPwz: string;
 
     @Column({ field: 'first_name' })
     firstName: string;
@@ -38,8 +29,33 @@ export class Doctor extends Model<Doctor> {
     @Column({ field: 'last_name' })
     lastName: string;
 
-    @Column({ type: DataType.ENUM(['chirurg_ogólny', 'okulista', 'dermatolog', 'laryngolog', 'ginekolog', 'kardiolog', 'urolog', 'ortopeda', 'pulmonolog', 'neurolog', 'alergolog', 'gastrolog', 'diabetolog', 'endokrynolog', 'reumatolog', 'nefrolog', 'hematolog', 'onkolog']) })
-    specialization: Specialist;
+    @Length({
+        min: 6, max: 6,
+        msg: `The length of postcode must be 6.`,
+    })
+    @Column
+    postcode: string;
+
+    @Column
+    street: string;
+
+    @Column
+    city: string;
+
+    @Length({
+        min: 9, max: 9,
+        msg: `The length of phone must be 6.`,
+    })
+    @Column
+    phone: string;
+
+    @Length({
+        min: 11, max: 11,
+        msg: `The length of pesel must be 11.`,
+    })
+    @Unique
+    @Column
+    pesel: string;
 
     @CreatedAt
     @Column({ field: 'created_at' })
