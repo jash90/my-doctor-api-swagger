@@ -6,7 +6,7 @@ import {
     IsOptional,
     MinLength,
 } from 'class-validator';
-import { Gender } from './../../shared/enum/gender';
+import { Gender } from '../../shared/enum/enums';
 import { ApiModelProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {

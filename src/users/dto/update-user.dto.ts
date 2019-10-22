@@ -1,4 +1,4 @@
-import { Gender } from './../../shared/enum/gender';
+import { Gender } from '../../shared/enum/enums';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsOptional, IsString, IsEnum, IsISO8601 } from 'class-validator';
 

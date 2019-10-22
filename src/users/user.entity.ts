@@ -10,7 +10,7 @@ import {
     DeletedAt,
     HasMany,
 } from 'sequelize-typescript';
-import { Gender } from './../shared/enum/gender';
+import { Gender } from '../shared/enum/enums';
 import { Post } from './../posts/post.entity';
 import { Comment } from './../comments/comment.entity';
 
