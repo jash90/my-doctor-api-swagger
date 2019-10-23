@@ -16,6 +16,7 @@ import {
 } from 'sequelize-typescript';
 import { Specialist, Gender } from 'src/shared/enum/enums';
 import { Schedule } from 'src/schedules/schedule.entity';
+import { Visit } from 'src/visits/visit.entity';
 
 @Table({
     tableName: 'doctor',
@@ -57,4 +58,7 @@ export class Doctor extends Model<Doctor> {
 
     @HasMany(() => Schedule)
     schedules: Schedule[];
+
+    @HasMany(() => Visit)
+    visits: Visit[];
 }
