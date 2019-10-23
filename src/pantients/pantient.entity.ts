@@ -12,7 +12,9 @@ import {
     UpdatedAt,
     DeletedAt,
     BelongsTo,
+    HasMany,
 } from 'sequelize-typescript';
+import { Visit } from 'src/visits/visit.entity';
 
 @Table({
     tableName: 'pantient',
@@ -68,4 +70,7 @@ export class Pantient extends Model<Pantient> {
     @DeletedAt
     @Column({ field: 'deleted_at' })
     deletedAt: Date;
+
+    @HasMany(() => Visit)
+    visits: Visit[];
 }
