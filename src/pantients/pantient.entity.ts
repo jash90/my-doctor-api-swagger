@@ -14,7 +14,7 @@ import {
     BelongsTo,
     HasMany,
 } from 'sequelize-typescript';
-import { Visit } from 'src/visits/visit.entity';
+import { Visit } from '../visits/visit.entity';
 
 @Table({
     tableName: 'pantient',

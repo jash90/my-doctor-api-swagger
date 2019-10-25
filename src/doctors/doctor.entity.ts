@@ -14,9 +14,9 @@ import {
     BelongsTo,
     HasMany,
 } from 'sequelize-typescript';
-import { Specialist, Gender } from 'src/shared/enum/enums';
-import { Schedule } from 'src/schedules/schedule.entity';
-import { Visit } from 'src/visits/visit.entity';
+import { Specialist, Gender } from '../shared/enum/enums';
+import { Schedule } from '../schedules/schedule.entity';
+import { Visit } from '../visits/visit.entity';
 
 @Table({
     tableName: 'doctor',

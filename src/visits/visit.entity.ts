@@ -16,8 +16,8 @@ import {
     Max,
     Validate
 } from 'sequelize-typescript';
-import { Doctor } from 'src/doctors/doctor.entity';
-import { Pantient } from 'src/pantients/pantient.entity';
+import { Doctor } from '../doctors/doctor.entity';
+import { Pantient } from '../pantients/pantient.entity';
 @Table({
     tableName: 'visit',
 })

@@ -67,11 +67,10 @@ export class UsersService {
         } catch (err) {
             if (err.original.constraint === 'user_email_key') {
                 throw new HttpException(
-                    `User with email '${err.errors[0].value}' already exists`,
+                    `User with email already exists`,
                     HttpStatus.CONFLICT,
                 );
             }
-
             throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

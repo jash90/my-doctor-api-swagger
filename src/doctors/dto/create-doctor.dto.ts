@@ -1,6 +1,6 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Length, IsString, IsEnum } from 'class-validator';
-import { Specialist } from 'src/shared/enum/enums';
+import { Specialist } from '../../shared/enum/enums';
 
 export class CreateDoctorDto {
     @ApiModelProperty()

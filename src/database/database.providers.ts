@@ -1,10 +1,10 @@
 import { Sequelize } from 'sequelize-typescript';
-import { User } from './../users/user.entity';
+import { User } from '../users/user.entity';
 import { ConfigService } from './../shared/config/config.service';
-import { Doctor } from 'src/doctors/doctor.entity';
-import { Pantient } from 'src/pantients/pantient.entity';
-import { Schedule } from 'src/schedules/schedule.entity';
-import { Visit } from 'src/visits/visit.entity';
+import { Doctor } from '../doctors/doctor.entity';
+import { Pantient } from '../pantients/pantient.entity';
+import { Schedule } from '../schedules/schedule.entity';
+import { Visit } from '../visits/visit.entity';
 
 export const databaseProviders = [
     {
