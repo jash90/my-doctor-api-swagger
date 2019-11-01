@@ -137,25 +137,26 @@ describe('/', () => {
                     .expect(HttpStatus.BAD_REQUEST);
             });
         });
+
     });
 
-    // describe('/doctors', () => {
-    //     describe('GET', () => {
-    //         return request(app.getHttpServer())
-    //             .get('/doctors')
-    //             .expect(HttpStatus.OK)
-    //             .expect(res => {
-    //                 token = res.body.token;
-    //                 userLoginResponseDto1.id = res.body.id;
-    //                 userLoginResponseDto1.token = token;
-    //                 expect(res.body).toEqual(userLoginResponseDto1);
-    //             });
-    //     })
+    describe('/doctors', () => {
+        it('get list doctors', () => {
+            return request(app.getHttpServer())
+                .get('/doctors')
+                .expect(HttpStatus.OK)
+                .expect(res => {
+                    token = res.body.token;
+                    userLoginResponseDto1.id = res.body.id;
+                    userLoginResponseDto1.token = token;
+                    expect(res.body).toEqual(userLoginResponseDto1);
+                });
+        });
 
-    //     describe('POST', () => {
-    //     })
+        describe('POST', () => {
+        })
 
-    // })
+    })
 
     // describe('/pantients', () => {
 
