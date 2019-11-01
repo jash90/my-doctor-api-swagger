@@ -3,7 +3,7 @@ import { CreateVisitDto } from './dto/create-visit.dto';
 import { Visit } from './visit.entity';
 import { VisitDto } from './dto/visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
-import { DateTimeFormatter, LocalDateTime, nativeJs } from 'js-joda';
+import { DateTimeFormatter, LocalDateTime, nativeJs, LocalTime } from 'js-joda';
 import { Doctor } from 'src/doctors/doctor.entity';
 import { Pantient } from 'src/pantients/pantient.entity';
 import { VisitOffset } from 'src/visits/dto/visit.offset';
@@ -39,13 +39,39 @@ export class VisitsService {
     }
 
     async create(createVisitDto: CreateVisitDto): Promise<Visit> {
+        const { doctorId, pantientId, date, description } = createVisitDto;
+
         const visit = new Visit();
-        visit.doctorId = createVisitDto.doctorId;
-        visit.pantientId = createVisitDto.pantientId;
-        visit.date = createVisitDto.date;
-        visit.description = createVisitDto.description;
+        visit.doctorId = doctorId;
+        visit.pantientId = pantientId;
+        visit.date = date;
+        visit.description = description;
+
+        let visitDay = LocalDateTime.from(nativeJs(date));
+
+        let dateVisit = this.dateVisits(new Date(visitDay.toString()));
+
+        if (dateVisit) {
+            throw new HttpException("Visit just already in schedule", HttpStatus.CONFLICT);
+        }
+
+        let create = false;
+
+        let schedules = await this.schedulesRepository.findAll({ where: { doctorId } });
+
+        let schedule = schedules.find(schedule => schedule.dayOfWeek === visitDay.dayOfWeek().value());
+        if (schedule) {
+            const hourOpen = LocalTime.parse(schedule.hourOpen);
+            const hourClose = LocalTime.parse(schedule.hourClose);
+            if (hourOpen.isBefore(visitDay.toLocalTime()) && hourClose.isAfter(visitDay.toLocalTime())) {
+                create = true;
+            }
+        }
 
         try {
+            if (!create)
+                throw new HttpException("Visit just already in schedule", HttpStatus.CONFLICT);
+
             return await visit.save();
         } catch (err) {
             throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -155,9 +181,9 @@ export class VisitsService {
     }
 
 
-    async doctorVisits(doctorId:number): Promise<VisitDto[]> {
+    async doctorVisits(doctorId: number): Promise<VisitDto[]> {
         const visits = await this.visitsRepository.findAll<Visit>({
-            where:{doctorId},
+            where: { doctorId },
             include: [Doctor, Pantient]
         });
         return visits.map(visit => {
@@ -166,13 +192,22 @@ export class VisitsService {
     }
 
 
-    async pantientVisits(pantientId:number): Promise<VisitDto[]> {
+    async pantientVisits(pantientId: number): Promise<VisitDto[]> {
         const visits = await this.visitsRepository.findAll<Visit>({
-            where:{pantientId},
+            where: { pantientId },
             include: [Doctor, Pantient]
         });
         return visits.map(visit => {
             return new VisitDto(visit);
         });
+    }
+
+    async dateVisits(date: Date): Promise<Visit | null> {
+        const visit = await this.visitsRepository.findOne<Visit>({
+            where: { date },
+            include: [Doctor, Pantient]
+        });
+
+        return visit;
     }
 }
