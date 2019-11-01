@@ -4,7 +4,7 @@ import { UserLoginResponseDto } from './../src/users/dto/user-login-response.dto
 import { UserDto } from './../src/users/dto/user.dto';
 import { Gender, Specialist } from '../src/shared/enum/enums';
 import { CreateUserDto } from './../src/users/dto/create-user.dto';
-import { CreateDoctorDto } from 'src/doctors/dto/create-doctor.dto';
+import { CreateDoctorDto } from '../src/doctors/dto/create-doctor.dto';
 
 export const createUserDto1: CreateUserDto = {
     email: 'testemail@gmail.com',
