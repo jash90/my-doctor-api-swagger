@@ -9,6 +9,7 @@ import { JwtPayload } from './auth/jwt-payload.model';
 import { sign } from 'jsonwebtoken';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ConfigService } from './../shared/config/config.service';
+import { UserOffset } from './dto/user.offset';
 
 @Injectable()
 export class UsersService {
@@ -134,4 +135,18 @@ export class UsersService {
         const token = sign(payload, this.jwtPrivateKey, {});
         return token;
     }
+    async offset(index: number = 0): Promise<UserOffset> {
+        let users = await this.usersRepository.findAndCountAll({
+            limit: 100,
+            offset: index * 100,
+            order: ['id']
+        });
+
+        let usersDto = users.rows.map(user=>{
+            return new UserDto(user);
+        })
+
+        return  {rows : usersDto, count :users.count};
+    }
 }
+
