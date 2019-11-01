@@ -24,6 +24,7 @@ import { Schedule as ScheduleEntity } from './schedule.entity';
 import { ScheduleDto } from './dto/schedule.dto';
 import { Request } from 'express';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
+import { ScheduleOffset } from './dto/schedules.offset';
 
 @Controller('schedules')
 @ApiUseTags('schedules')
@@ -81,5 +82,11 @@ export class SchedulesController {
     @ApiImplicitParam({ name: 'id', required: true })
     search(@Param('id', new ParseIntPipe()) id: number): Promise<ScheduleDto[]> {
         return this.schedulesService.search(id);
+    }
+
+    @Get(':id')
+    @ApiOkResponse({ type: ScheduleOffset})
+    offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<ScheduleOffset> {
+        return this.schedulesService.offset(index);
     }
 }

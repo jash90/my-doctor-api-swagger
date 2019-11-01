@@ -3,6 +3,8 @@ import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { Schedule } from './schedule.entity';
 import { ScheduleDto } from './dto/schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
+import { ScheduleOffset } from './dto/schedules.offset';
+import { Doctor } from 'src/doctors/doctor.entity';
 
 @Injectable()
 export class SchedulesService {
@@ -86,5 +88,20 @@ export class SchedulesService {
         return schedules.map(schedule => {
             return new ScheduleDto(schedule);
         });
+    }
+
+    async offset(index: number = 0): Promise<ScheduleOffset> {
+        let schedules = await this.schedulesRepository.findAndCountAll({
+            include: [Doctor],
+            limit: 100,
+            offset: index * 100,
+            order: ['id']
+        });
+
+        let ScheduleDto = schedules.rows.map(schedules=>{
+            return new ScheduleDto(schedules);
+        })
+
+        return  {rows : ScheduleDto, count :schedules.count};
     }
 }
