@@ -14,7 +14,7 @@ export class UpdateScheduleDto {
 
     @ApiModelProperty()
     @Min(1)
-    @Max(6)
+    @Max(7)
     @IsOptional()
     readonly dayOfWeek?: number;
 

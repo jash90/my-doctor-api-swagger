@@ -31,8 +31,8 @@ export class Schedule extends Model<Schedule> {
     @Column({ type: DataType.BIGINT, field: 'doctor_id' })
     doctorId: number;
    
-    @Min(0)
-    @Max(6)
+    @Min(1)
+    @Max(7)
     @Column
     dayOfWeek: number;
 

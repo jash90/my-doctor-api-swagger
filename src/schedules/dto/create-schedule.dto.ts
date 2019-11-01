@@ -12,7 +12,7 @@ export class CreateScheduleDto {
 
     @ApiModelProperty()
     @Min(1)
-    @Max(6)
+    @Max(7)
     readonly dayOfWeek: number;
 
     @ApiModelProperty()

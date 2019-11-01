@@ -83,6 +83,12 @@ export class VisitsController {
         return this.visitsService.offset(index);
     }
 
+    @Get(':id')
+    @ApiOkResponse({ type: VisitOffset})
+    freeVisit(@Param('id', new ParseIntPipe()) index: number): Promise<String[]> {
+        return this.visitsService.freeVisit(index);
+    }
+
     // @Get(':id')
     // @ApiOkResponse({ type: VisitDto })
     // @ApiImplicitParam({ name: 'id', required: true })
