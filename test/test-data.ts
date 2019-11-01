@@ -82,13 +82,18 @@ export const userDto2: UserDto = {
     birthday: '1996-07-17',
 };
 
-<<<<<<< HEAD
+export const createDoctorDto1: CreateDoctorDto = {
+    numberPwz: '1234567',
+    firstName: 'Zbigniew',
+    lastName: 'Stonoga',
+    specialization: Specialist.urolog
+};
 
 export const CreateDoctorDto2: CreateDoctorDto = {
         numberPwz: '14882137',
         firstName: 'Mark',
         lastName: 'Sloan',
-        specialization: 'chirurg_ogólny',
+        specialization: Specialist.chirurg_ogólny,
 };
 
 export const CreatePantientDto1: CreatePantientDto ={
@@ -109,11 +114,4 @@ export const CreatePantientDto2: CreatePantientDto ={
     city: 'San Andreas',
     phone: '666667668',
     pesel: '12345678910',
-=======
-export const createDoctorDto1: CreateDoctorDto = {
-    numberPwz: '1234567',
-    firstName: 'Zbigniew',
-    lastName: 'Stonoga',
-    specialization: Specialist.urolog
->>>>>>> 0b4cf4c482582d090e3efe8b6f0520d839aa9a87
-};
+
