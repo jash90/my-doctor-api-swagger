@@ -135,6 +135,78 @@ describe('/', () => {
         });
     });
 
+    describe('/doctors', () => {
+        describe('GET', () => {
+        })
+
+        describe('POST', () => {
+        })
+
+    })
+
+    describe('/pantients', () => {
+
+        describe('GET', () => {
+        })
+
+        describe('GET /{id}', () => {
+        })
+
+        describe('PUT /{id}', () => {
+        })
+
+        describe('POST', () => {
+        })
+
+        describe('DELETE /{id}', () => {
+        })
+
+    })
+
+    describe('/schedules', () => {
+
+        describe('GET', () => {
+        })
+
+        describe('GET /{id}', () => {
+        })
+
+        describe('PUT /{id}', () => {
+        })
+
+        describe('POST', () => {
+        })
+
+        describe('DELETE /{id}', () => {
+        })
+    })
+
+    describe('/visits', () => {
+
+        describe('GET', () => {
+        })
+
+        describe('GET /{id}', () => {
+        })
+
+        describe('GET /{doctorId}', () => {
+        })
+
+        describe('GET /{pantientid}', () => {
+        })
+
+        describe('PUT /{id}', () => {
+        })
+
+        describe('POST', () => {
+        })
+
+        describe('DELETE /{id}', () => {
+        })
+
+    })
+
+
     afterAll(async done => {
         await app.close();
         await sequelize.drop();
