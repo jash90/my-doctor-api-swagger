@@ -24,6 +24,7 @@ import { Visit as VisitEntity } from './visit.entity';
 import { VisitDto } from './dto/visit.dto';
 import { Request } from 'express';
 import { UpdateVisitDto } from './dto/update-visit.dto';
+import { VisitOffset } from 'src/visits/dto/visit.offset';
 
 @Controller('visits')
 @ApiUseTags('visits')
@@ -75,4 +76,17 @@ export class VisitsController {
     ): Promise<VisitEntity> {
         return this.visitsService.delete(id);
     }
+
+    @Get(':index')
+    @ApiOkResponse({ type: VisitOffset})
+    offset(@Param('id', new ParseIntPipe()) index: number= 1): Promise<VisitOffset> {
+        return this.visitsService.offset(index);
+    }
+
+    // @Get(':id')
+    // @ApiOkResponse({ type: VisitDto })
+    // @ApiImplicitParam({ name: 'id', required: true })
+    // search(@Param('id', new ParseIntPipe()) id: number): Promise<VisitDto[]> {
+    //     return this.visitsService.search(id);
+    // }
 }

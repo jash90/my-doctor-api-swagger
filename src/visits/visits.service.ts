@@ -3,6 +3,10 @@ import { CreateVisitDto } from './dto/create-visit.dto';
 import { Visit } from './visit.entity';
 import { VisitDto } from './dto/visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
+import { Op } from 'sequelize';
+import { Doctor } from 'src/doctors/doctor.entity';
+import { Pantient } from 'src/pantients/pantient.entity';
+import { VisitOffset } from 'src/visits/dto/visit.offset';
 
 @Injectable()
 export class VisitsService {
@@ -13,6 +17,7 @@ export class VisitsService {
 
     async findAll(): Promise<VisitDto[]> {
         const visits = await this.visitsRepository.findAll<Visit>({
+            include: [Doctor, Pantient]
         });
         return visits.map(visit => {
             return new VisitDto(visit);
@@ -21,6 +26,7 @@ export class VisitsService {
 
     async findOne(id: number): Promise<VisitDto> {
         const visit = await this.visitsRepository.findByPk<Visit>(id, {
+            include: [Doctor, Pantient]
         });
         if (!visit) {
             throw new HttpException('No visit found', HttpStatus.NOT_FOUND);
@@ -74,4 +80,50 @@ export class VisitsService {
         await visit.destroy();
         return visit;
     }
+
+    async offset(index: number = 1): Promise<VisitOffset> {
+        let visits = await this.visitsRepository.findAndCountAll({
+            include: [Doctor, Pantient],
+            limit: 100,
+            offset: index * 100,
+            order: ['id']
+        });
+
+        let visitsDto = visits.rows.map(visit=>{
+            return new VisitDto(visit);
+        })
+
+        return  {rows : visitsDto, count :visits.count};
+    }
+
+    // async search(id: number): Promise<VisitDto[]> {
+    //     const dt = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm');
+    //     const now = LocalDateTime.now().toLocalDate();
+    //     const next10 = LocalDateTime.now().plusDays(100);
+
+    //     const visits = await this.visitsRepository.findAll<Visit>({
+    //         // where: {
+    //         //     doctorId: {
+    //         //         [Op.between]: [1, 2]
+    //         //     }
+    //         // doctorId: id,
+    //         //  date: { [Op.between]: [new Date(), new Date()] },
+
+    //         //   }
+    //         where: {
+    //             // doctorId: {
+    //             //     [Op.lt]: new Date(),
+    //             //     [Op.gt]: new Date()
+    //             // }
+    //         }
+    //     });
+    //     if (!visits) {
+    //         throw new HttpException('No visit found', HttpStatus.NOT_FOUND);
+    //     }
+
+    //     return visits;
+    //     // .map(visit => {
+    //     //     return new VisitDto(visit);
+    //     // });
+    // }
 }
