@@ -8,12 +8,15 @@ import { Op } from 'sequelize';
 import { Doctor } from 'src/doctors/doctor.entity';
 import { Pantient } from 'src/pantients/pantient.entity';
 import { VisitOffset } from 'src/visits/dto/visit.offset';
+import { Schedule } from 'src/schedules/schedule.entity';
 
 @Injectable()
 export class VisitsService {
     constructor(
         @Inject('VisitsRepository')
         private readonly visitsRepository: typeof Visit,
+        @Inject('SchedulesRepository')
+        private readonly schedulesRepository: typeof Schedule,
     ) { }
 
     async findAll(): Promise<VisitDto[]> {
@@ -90,11 +93,45 @@ export class VisitsService {
             order: ['id']
         });
 
-        let visitsDto = visits.rows.map(visit=>{
+        let visitsDto = visits.rows.map(visit => {
             return new VisitDto(visit);
         })
 
-        return  {rows : visitsDto, count :visits.count};
+        return { rows: visitsDto, count: visits.count };
+    }
+
+    async freeVisit(doctorId: number): Promise<String[]> {
+        let freeDay:String[] = [];
+        let schedules = await this.schedulesRepository.findAll({
+            where: {
+                doctorId
+            }
+        });
+        let now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
+
+        for (let index = 0; index < 14; index++) {
+            const schedule = schedules.find((schedule) => schedule.dayOfWeek === now.dayOfWeek().value());
+            let morning = now;
+            if (schedule) {
+                const hourOpen = Number(schedule.hourOpen.replace(":00:00", ""));
+                const hourClose = Number(schedule.hourClose.replace(":00:00", ""));
+                for (let index = hourOpen; index < hourClose; index++) {
+                    morning = now.withHour(index);
+                    let visit = await Visit.findOne({
+                        where: {
+                            doctorId,
+                            date: morning.toString()
+                        }
+                    });
+                    if (!visit) {
+                        freeDay.push(morning.toString());
+                    }
+                }
+            }
+            morning = morning.withHour(24);
+        }
+        return freeDay;
+
     }
 
     // async search(id: number): Promise<VisitDto[]> {
