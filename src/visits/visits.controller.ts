@@ -85,14 +85,14 @@ export class VisitsController {
 
     @Get(':id')
     @ApiOkResponse({ type: VisitOffset})
-    freeVisit(@Param('id', new ParseIntPipe()) index: number): Promise<String[]> {
+    freeVisit(@Param('id', new ParseIntPipe()) index: number): Promise<string[]> {
         return this.visitsService.freeVisit(index);
     }
 
-    // @Get(':id')
-    // @ApiOkResponse({ type: VisitDto })
-    // @ApiImplicitParam({ name: 'id', required: true })
-    // search(@Param('id', new ParseIntPipe()) id: number): Promise<VisitDto[]> {
-    //     return this.visitsService.search(id);
-    // }
+    @Get(':id')
+    @ApiOkResponse({ type: VisitDto })
+    @ApiImplicitParam({ name: 'id', required: true })
+    search(@Param('id', new ParseIntPipe()) doctorId: number): Promise<VisitDto[]> {
+        return this.visitsService.search(doctorId);
+    }
 }

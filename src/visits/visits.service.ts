@@ -99,8 +99,8 @@ export class VisitsService {
         return { rows: visitsDto, count: visits.count };
     }
 
-    async freeVisit(doctorId: number): Promise<String[]> {
-        let freeDay: String[] = [];
+    async freeVisit(doctorId: number): Promise<string[]> {
+        let freeDay: string[] = [];
         let schedules = await this.schedulesRepository.findAll({
             where: {
                 doctorId
