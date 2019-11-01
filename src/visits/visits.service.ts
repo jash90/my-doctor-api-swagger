@@ -140,19 +140,12 @@ export class VisitsService {
     //     const next10 = LocalDateTime.now().plusDays(100);
 
     //     const visits = await this.visitsRepository.findAll<Visit>({
-    //         // where: {
-    //         //     doctorId: {
-    //         //         [Op.between]: [1, 2]
-    //         //     }
-    //         // doctorId: id,
-    //         //  date: { [Op.between]: [new Date(), new Date()] },
-
-    //         //   }
     //         where: {
-    //             // doctorId: {
-    //             //     [Op.lt]: new Date(),
-    //             //     [Op.gt]: new Date()
-    //             // }
+            
+           
+    //          date: { [Op.gte]: new Date}
+
+            
     //         }
     //     });
     //     if (!visits) {
