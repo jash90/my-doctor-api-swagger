@@ -16,6 +16,10 @@ import {
     userLoginRequestDto2,
     userLoginRequestDto3,
 } from './test-data';
+import { Doctor } from './../src/doctors/doctor.entity';
+import { Pantient } from './../src/pantients/pantient.entity';
+import { Schedule } from './../src/schedules/schedule.entity';
+import { Visit } from './../src/visits/visit.entity';
 
 describe('/', () => {
     let app: INestApplication;
@@ -34,7 +38,7 @@ describe('/', () => {
                             configService.sequelizeOrmConfig,
                         );
 
-                        sequelize.addModels([User]);
+                        sequelize.addModels([User, Doctor, Pantient, Schedule, Visit]);
 
                         return sequelize;
                     },
@@ -133,78 +137,88 @@ describe('/', () => {
                     .expect(HttpStatus.BAD_REQUEST);
             });
         });
+
     });
 
     describe('/doctors', () => {
-        describe('GET', () => {
-        })
+        it('get list doctors', () => {
+            return request(app.getHttpServer())
+                .get('/doctors')
+                .expect(HttpStatus.OK)
+                .expect(res => {
+                    token = res.body.token;
+                    userLoginResponseDto1.id = res.body.id;
+                    userLoginResponseDto1.token = token;
+                    expect(res.body).toEqual(userLoginResponseDto1);
+                });
+        });
 
         describe('POST', () => {
         })
 
     })
 
-    describe('/pantients', () => {
+    // describe('/pantients', () => {
 
-        describe('GET', () => {
-        })
+    //     describe('GET', () => {
+    //     })
 
-        describe('GET /{id}', () => {
-        })
+    //     describe('GET /{id}', () => {
+    //     })
 
-        describe('PUT /{id}', () => {
-        })
+    //     describe('PUT /{id}', () => {
+    //     })
 
-        describe('POST', () => {
-        })
+    //     describe('POST', () => {
+    //     })
 
-        describe('DELETE /{id}', () => {
-        })
+    //     describe('DELETE /{id}', () => {
+    //     })
 
-    })
+    // })
 
-    describe('/schedules', () => {
+    // describe('/schedules', () => {
 
-        describe('GET', () => {
-        })
+    //     describe('GET', () => {
+    //     })
 
-        describe('GET /{id}', () => {
-        })
+    //     describe('GET /{id}', () => {
+    //     })
 
-        describe('PUT /{id}', () => {
-        })
+    //     describe('PUT /{id}', () => {
+    //     })
 
-        describe('POST', () => {
-        })
+    //     describe('POST', () => {
+    //     })
 
-        describe('DELETE /{id}', () => {
-        })
-    })
+    //     describe('DELETE /{id}', () => {
+    //     })
+    // })
 
-    describe('/visits', () => {
+    // describe('/visits', () => {
 
-        describe('GET', () => {
-        })
+    //     describe('GET', () => {
+    //     })
 
-        describe('GET /{id}', () => {
-        })
+    //     describe('GET /{id}', () => {
+    //     })
 
-        describe('GET /{doctorId}', () => {
-        })
+    //     describe('GET /{doctorId}', () => {
+    //     })
 
-        describe('GET /{pantientid}', () => {
-        })
+    //     describe('GET /{pantientid}', () => {
+    //     })
 
-        describe('PUT /{id}', () => {
-        })
+    //     describe('PUT /{id}', () => {
+    //     })
 
-        describe('POST', () => {
-        })
+    //     describe('POST', () => {
+    //     })
 
-        describe('DELETE /{id}', () => {
-        })
+    //     describe('DELETE /{id}', () => {
+    //     })
 
-    })
+    // })
 
 
     afterAll(async done => {

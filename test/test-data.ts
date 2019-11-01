@@ -2,10 +2,13 @@ import { UserLoginRequestDto } from './../src/users/dto/user-login-request.dto';
 import { UpdateUserDto } from './../src/users/dto/update-user.dto';
 import { UserLoginResponseDto } from './../src/users/dto/user-login-response.dto';
 import { UserDto } from './../src/users/dto/user.dto';
-import { Gender } from '../src/shared/enum/enums';
+import { Gender, Specialist } from '../src/shared/enum/enums';
 import { CreateUserDto } from './../src/users/dto/create-user.dto';
 import { CreateDoctorDto } from '../src/doctors/dto/create-doctor.dto';
+<<<<<<< HEAD
 import { CreatePantientDto } from '../src/pantients/dto/create-pantient.dto';
+=======
+>>>>>>> 0b4cf4c482582d090e3efe8b6f0520d839aa9a87
 
 export const createUserDto1: CreateUserDto = {
     email: 'testemail@gmail.com',
@@ -79,6 +82,7 @@ export const userDto2: UserDto = {
     birthday: '1996-07-17',
 };
 
+<<<<<<< HEAD
 
 export const CreateDoctorDto2: CreateDoctorDto = {
         numberPwz: '14882137',
@@ -105,4 +109,11 @@ export const CreatePantientDto2: CreatePantientDto ={
     city: 'San Andreas',
     phone: '666667668',
     pesel: '12345678910',
+=======
+export const createDoctorDto1: CreateDoctorDto = {
+    numberPwz: '1234567',
+    firstName: 'Zbigniew',
+    lastName: 'Stonoga',
+    specialization: Specialist.urolog
+>>>>>>> 0b4cf4c482582d090e3efe8b6f0520d839aa9a87
 };
