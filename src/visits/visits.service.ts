@@ -4,7 +4,6 @@ import { Visit } from './visit.entity';
 import { VisitDto } from './dto/visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
 import { DateTimeFormatter, LocalDateTime } from 'js-joda';
-import { Op } from 'sequelize';
 import { Doctor } from 'src/doctors/doctor.entity';
 import { Pantient } from 'src/pantients/pantient.entity';
 import { VisitOffset } from 'src/visits/dto/visit.offset';
@@ -101,7 +100,7 @@ export class VisitsService {
     }
 
     async freeVisit(doctorId: number): Promise<String[]> {
-        let freeDay:String[] = [];
+        let freeDay: String[] = [];
         let schedules = await this.schedulesRepository.findAll({
             where: {
                 doctorId
@@ -134,27 +133,24 @@ export class VisitsService {
 
     }
 
-    // async search(id: number): Promise<VisitDto[]> {
-    //     const dt = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm');
-    //     const now = LocalDateTime.now().toLocalDate();
-    //     const next10 = LocalDateTime.now().plusDays(100);
+    async search(doctorId: number): Promise<VisitDto[]> {
+        const now = LocalDateTime.now().toLocalDate().toString();
+        const next10 = LocalDateTime.now().plusDays(100).toString();
 
-    //     const visits = await this.visitsRepository.findAll<Visit>({
-    //         where: {
-            
-           
-    //          date: { [Op.gte]: new Date}
+        const visits = await this.visitsRepository.findAll({
+            where: {
+                doctorId,
+                date: {
+                    $between: [new Date(now), new Date(next10)]
+                }
+            }
+        });
+        if (!visits) {
+            throw new HttpException('No visit found', HttpStatus.NOT_FOUND);
+        }
 
-            
-    //         }
-    //     });
-    //     if (!visits) {
-    //         throw new HttpException('No visit found', HttpStatus.NOT_FOUND);
-    //     }
-
-    //     return visits;
-    //     // .map(visit => {
-    //     //     return new VisitDto(visit);
-    //     // });
-    // }
+        return visits.map(visit => {
+            return new VisitDto(visit);
+        });
+    }
 }
