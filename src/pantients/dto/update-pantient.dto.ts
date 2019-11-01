@@ -5,12 +5,6 @@ export class UpdatePantientDto {
     @IsOptional()
     @ApiModelProperty()
     @IsString()
-    @Length(7)
-    readonly numberPwz?: string;
-
-    @IsOptional()
-    @ApiModelProperty()
-    @IsString()
     readonly firstName?: string;
 
     @IsOptional()
