@@ -1,6 +1,6 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Visit } from '../visit.entity';
-import { VisitDto } from 'src/visits/dto/visit.dto';
+import { VisitDto } from '../dto/visit.dto';
 
 export class VisitOffset {
     @ApiModelProperty()

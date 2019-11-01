@@ -1,6 +1,6 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Doctor } from '../doctor.entity';
-import { DoctorDto } from 'src/doctors/dto/doctor.dto';
+import { DoctorDto } from '../dto/doctor.dto';
 
 export class DoctorOffset {
     @ApiModelProperty()

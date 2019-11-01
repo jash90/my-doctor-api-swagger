@@ -1,6 +1,6 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Pantient } from '../pantient.entity';
-import { PantientDto } from 'src/pantients/dto/pantient.dto';
+import { PantientDto } from '../dto/pantient.dto';
 
 export class PantientOffset {
     @ApiModelProperty()

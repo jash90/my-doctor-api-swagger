@@ -24,7 +24,7 @@ import { Visit as VisitEntity } from './visit.entity';
 import { VisitDto } from './dto/visit.dto';
 import { Request } from 'express';
 import { UpdateVisitDto } from './dto/update-visit.dto';
-import { VisitOffset } from 'src/visits/dto/visit.offset';
+import { VisitOffset } from './dto/visit.offset';
 
 @Controller('visits')
 @ApiUseTags('visits')

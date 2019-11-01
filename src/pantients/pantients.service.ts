@@ -4,7 +4,7 @@ import { Pantient } from './pantient.entity';
 import { PantientDto } from './dto/pantient.dto';
 import { UpdatePantientDto } from './dto/update-pantient.dto';
 import { PantientOffset } from './dto/pantient.offset';
-import { Visit } from 'src/visits/visit.entity';
+import { Visit } from '../visits/visit.entity';
 
 @Injectable()
 export class PantientsService {

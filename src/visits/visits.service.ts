@@ -4,10 +4,10 @@ import { Visit } from './visit.entity';
 import { VisitDto } from './dto/visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
 import { DateTimeFormatter, LocalDateTime, nativeJs, LocalTime } from 'js-joda';
-import { Doctor } from 'src/doctors/doctor.entity';
-import { Pantient } from 'src/pantients/pantient.entity';
-import { VisitOffset } from 'src/visits/dto/visit.offset';
-import { Schedule } from 'src/schedules/schedule.entity';
+import { Doctor } from '../doctors/doctor.entity';
+import { Pantient } from '../pantients/pantient.entity';
+import { VisitOffset } from '../visits/dto/visit.offset';
+import { Schedule } from '../schedules/schedule.entity';
 
 @Injectable()
 export class VisitsService {
@@ -62,8 +62,6 @@ export class VisitsService {
         if (schedules.length === 0){
             throw new HttpException("Doctor dont have schedule", HttpStatus.NOT_FOUND);
         }
-
-        console.log(schedules);
 
         let schedule = schedules.find(schedule => schedule.dayOfWeek === visitDay.dayOfWeek().value());
         if (schedule) {

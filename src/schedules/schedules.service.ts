@@ -4,7 +4,7 @@ import { Schedule } from './schedule.entity';
 import { ScheduleDto } from './dto/schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import { ScheduleOffset } from './dto/schedules.offset';
-import { Doctor } from 'src/doctors/doctor.entity';
+import { Doctor } from '../doctors/doctor.entity';
 
 @Injectable()
 export class SchedulesService {

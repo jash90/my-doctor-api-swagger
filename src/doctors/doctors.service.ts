@@ -4,8 +4,8 @@ import { Doctor } from './doctor.entity';
 import { DoctorDto } from './dto/doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { DoctorOffset } from './dto/doctor.offset';
-import { Visit } from 'src/visits/visit.entity';
-import { Schedule } from 'src/schedules/schedule.entity';
+import { Visit } from '../visits/visit.entity';
+import { Schedule } from '../schedules/schedule.entity';
 
 @Injectable()
 export class DoctorsService {
