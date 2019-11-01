@@ -3,11 +3,11 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 export function setupSwagger(app: INestApplication) {
     const options = new DocumentBuilder()
-        .setTitle('My Doctor API')
+        .setTitle('MyDoctor API')
         .setLicense('MIT License','ttps://opensource.org/licenses/MIT')
-        .setContactEmail('maciej.krzywdaa@gmail.com')
+        .setContactEmail('makrzywd@metal.agh.edu.pl')
         .setDescription('API Documentation')
-        .setVersion('1.0')
+        .setVersion('1.1')
         .addBearerAuth()
         .build();
 
