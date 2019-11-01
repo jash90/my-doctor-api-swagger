@@ -3,6 +3,9 @@ import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { Doctor } from './doctor.entity';
 import { DoctorDto } from './dto/doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { DoctorOffset } from './dto/doctor.offset';
+import { Visit } from 'src/visits/visit.entity';
+import { Schedule } from 'src/schedules/schedule.entity';
 
 @Injectable()
 export class DoctorsService {
@@ -74,5 +77,20 @@ export class DoctorsService {
         const doctor = await this.getDoctor(id);
         await doctor.destroy();
         return doctor;
+    }
+
+    async offset(index: number = 0): Promise<DoctorOffset> {
+        let doctors = await this.doctorsRepository.findAndCountAll({
+            include: [Visit, Schedule],
+            limit: 100,
+            offset: index * 100,
+            order: ['id']
+        });
+
+        let DoctorsDto = doctors.rows.map(doctor=>{
+            return new DoctorsDto(doctor);
+        })
+
+        return  {rows : DoctorsDto, count :doctors.count};
     }
 }

@@ -24,6 +24,7 @@ import { Doctor as DoctorEntity } from './doctor.entity';
 import { DoctorDto } from './dto/doctor.dto';
 import { Request } from 'express';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { DoctorOffset } from './dto/doctor.offset';
 
 @Controller('doctors')
 @ApiUseTags('doctors')
@@ -74,5 +75,11 @@ export class DoctorsController {
         @Param('id', new ParseIntPipe()) id: number,
     ): Promise<DoctorEntity> {
         return this.doctorsService.delete(id);
+    }
+
+    @Get(':index')
+    @ApiOkResponse({ type: DoctorOffset})
+    offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<DoctorOffset> {
+        return this.doctorsService.offset(index);
     }
 }
