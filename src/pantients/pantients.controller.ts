@@ -24,6 +24,7 @@ import { Pantient as PantientEntity } from './pantient.entity';
 import { PantientDto } from './dto/pantient.dto';
 import { Request } from 'express';
 import { UpdatePantientDto } from './dto/update-pantient.dto';
+import { PantientOffset } from './dto/pantient.offset';
 
 @Controller('pantients')
 @ApiUseTags('pantients')
@@ -74,5 +75,11 @@ export class PantientsController {
         @Param('id', new ParseIntPipe()) id: number,
     ): Promise<PantientEntity> {
         return this.pantientsService.delete(id);
+    }
+
+    @Get(':index')
+    @ApiOkResponse({ type: PantientOffset})
+    offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<PantientOffset> {
+        return this.pantientsService.offset(index);
     }
 }
