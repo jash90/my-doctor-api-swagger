@@ -5,10 +5,9 @@ import { UserDto } from './../src/users/dto/user.dto';
 import { Gender, Specialist } from '../src/shared/enum/enums';
 import { CreateUserDto } from './../src/users/dto/create-user.dto';
 import { CreateDoctorDto } from '../src/doctors/dto/create-doctor.dto';
-<<<<<<< HEAD
 import { CreatePantientDto } from '../src/pantients/dto/create-pantient.dto';
-=======
->>>>>>> 0b4cf4c482582d090e3efe8b6f0520d839aa9a87
+import { CreateScheduleDto } from '../src/schedules/dto/create-schedule.dto';
+import { CreateVisitDto } from '../src/visits/dto/create-visit.dto';
 
 export const createUserDto1: CreateUserDto = {
     email: 'testemail@gmail.com',
@@ -114,4 +113,104 @@ export const CreatePantientDto2: CreatePantientDto ={
     city: 'San Andreas',
     phone: '666667668',
     pesel: '12345678910',
+};
 
+export const CreatePantientDto3: CreatePantientDto ={
+    firstName: 'Karl',
+    lastName: 'Marx',
+    postcode: 'CC-CP1',
+    street: 'Karl Marx St.',
+    city: 'Tier',
+    phone: '444333222',
+    pesel: '05051811111',
+};
+
+export const CreatePantientDto4: CreatePantientDto ={
+    firstName: 'Ludwig',
+    lastName: 'von Misses',
+    postcode: '89-ABC',
+    street: 'Captializm Street',
+    city: 'Wien',
+    phone: '111333999',
+    pesel: '1231233219',
+};
+
+export const CreateScheduleDto1: CreateScheduleDto ={
+    doctorId: 2,
+    lastName: 'Sloan',
+    dayOfWeek: 1,
+    hourOpen:'12:00',
+    hourClose:'14:00',
+
+};
+
+export const CreateScheduleDto2: CreateScheduleDto ={
+    doctorId: 2,
+    lastName: 'Sloan',
+    dayOfWeek: 2,
+    hourOpen:'12:00',
+    hourClose:'14:00',
+
+};
+export const CreateScheduleDto3: CreateScheduleDto ={
+    doctorId: 1,
+    lastName: 'Stonoga',
+    dayOfWeek: 3,
+    hourOpen:'08:00',
+    hourClose:'16:00',
+
+};
+
+export const CreateScheduleDto4: CreateScheduleDto ={
+    doctorId: 2,
+    lastName: 'Sloan',
+    dayOfWeek: 1,
+    hourOpen:'08:00',
+    hourClose:'14:00',
+
+};
+
+export const CreateScheduleDto5: CreateScheduleDto ={
+    doctorId: 1,
+    lastName: 'Stonoga',
+    dayOfWeek: 5,
+    hourOpen:'13:00',
+    hourClose:'16:00',
+
+};
+export const CreateScheduleDto6: CreateScheduleDto ={
+    doctorId: 1,
+    lastName: 'Stonoga',
+    dayOfWeek: 4,
+    hourOpen:'10:00',
+    hourClose:'11:00',
+
+};
+
+export const CreateVisitDto1 : CreateVisitDto ={
+    doctorId: 2,
+    pantientId: 2,
+    date: new Date('2019-11-04T12:50:57'),
+    description: 'need operation of brain'
+};
+
+export const CreateVisitDto2 : CreateVisitDto ={
+    doctorId: 2,
+    pantientId: 1,
+    date: new Date('2019-11-04T13:20:57'),
+    description: 'consultation'
+};
+
+export const CreateVisitDto3 : CreateVisitDto ={
+    doctorId: 1,
+    pantientId: 3,
+    date: new Date('2019-11-08T14:11:57'),
+    description: 'consultation'
+};
+
+export const CreateVisitDto4 : CreateVisitDto ={
+    doctorId: 1,
+    pantientId: 4,
+    date: new Date('2019-11-07T10:23:57'),
+    description: 'consultation'
+};
