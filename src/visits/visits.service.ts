@@ -44,12 +44,12 @@ export class VisitsService {
         const visit = new Visit();
         visit.doctorId = doctorId;
         visit.pantientId = pantientId;
-        visit.date = date;
+        visit.date = new Date(date);
         visit.description = description;
 
-        let visitDay = LocalDateTime.from(nativeJs(date));
+        let visitDay = LocalDateTime.from(nativeJs(new Date(date)));
 
-        let dateVisit = this.dateVisits(new Date(visitDay.toString()));
+        let dateVisit = await this.dateVisits(new Date(visitDay.toString()));
 
         if (dateVisit) {
             throw new HttpException("Visit just already in schedule", HttpStatus.CONFLICT);
@@ -58,6 +58,12 @@ export class VisitsService {
         let create = false;
 
         let schedules = await this.schedulesRepository.findAll({ where: { doctorId } });
+
+        if (schedules.length === 0){
+            throw new HttpException("Doctor dont have schedule", HttpStatus.NOT_FOUND);
+        }
+
+        console.log(schedules);
 
         let schedule = schedules.find(schedule => schedule.dayOfWeek === visitDay.dayOfWeek().value());
         if (schedule) {
