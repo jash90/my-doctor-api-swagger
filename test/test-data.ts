@@ -4,6 +4,8 @@ import { UserLoginResponseDto } from './../src/users/dto/user-login-response.dto
 import { UserDto } from './../src/users/dto/user.dto';
 import { Gender } from '../src/shared/enum/enums';
 import { CreateUserDto } from './../src/users/dto/create-user.dto';
+import { CreateDoctorDto } from '../src/doctors/dto/create-doctor.dto';
+import { CreatePantientDto } from '../src/pantients/dto/create-pantient.dto';
 
 export const createUserDto1: CreateUserDto = {
     email: 'testemail@gmail.com',
@@ -75,4 +77,32 @@ export const userDto2: UserDto = {
     ...userDto1,
     gender: Gender.female,
     birthday: '1996-07-17',
+};
+
+
+export const CreateDoctorDto2: CreateDoctorDto = {
+        numberPwz: '14882137',
+        firstName: 'Mark',
+        lastName: 'Sloan',
+        specialization: 'chirurg_ogólny',
+};
+
+export const CreatePantientDto1: CreatePantientDto ={
+    firstName: 'Sweet',
+    lastName: 'Johnson',
+    postcode: 'SE8-3PG',
+    street: 'Grove Street',
+    city: 'San Andreas',
+    phone: '111222333',
+    pesel: '10987654321',
+};
+
+export const CreatePantientDto2: CreatePantientDto ={
+    firstName: 'Carl',
+    lastName: 'Johnson',
+    postcode: 'SE8-3PG',
+    street: 'Grove Street',
+    city: 'San Andreas',
+    phone: '666667668',
+    pesel: '12345678910',
 };
