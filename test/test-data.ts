@@ -95,6 +95,21 @@ export const CreateDoctorDto2: CreateDoctorDto = {
         specialization: Specialist.chirurg_ogólny,
 };
 
+export const CreateDoctorDto3: CreateDoctorDto = {
+    numberPwz: '7654321',
+    firstName: 'Alfred',
+    lastName: 'Zygrfryd',
+    specialization: Specialist.diabetolog,
+};
+
+export const CreateDoctorDto4: CreateDoctorDto = {
+    numberPwz: '1234568',
+    firstName: 'Zorak',
+    lastName: 'Zorakowsi',
+    specialization: Specialist.dermatolog,
+};
+
+
 export const CreatePantientDto1: CreatePantientDto ={
     firstName: 'Sweet',
     lastName: 'Johnson',
@@ -144,6 +159,7 @@ export const CreateScheduleDto1: CreateScheduleDto ={
 
 };
 
+
 export const CreateScheduleDto2: CreateScheduleDto ={
     doctorId: 2,
     lastName: 'Sloan',
@@ -184,6 +200,24 @@ export const CreateScheduleDto6: CreateScheduleDto ={
     dayOfWeek: 4,
     hourOpen:'10:00',
     hourClose:'11:00',
+
+};
+
+export const CreateScheduleDto7: CreateScheduleDto ={
+    doctorId: 3,
+    lastName: 'Zorakowsi',
+    dayOfWeek: 4,
+    hourOpen:'06:00',
+    hourClose:'07:20',
+
+};
+
+export const CreateScheduleDto8: CreateScheduleDto ={
+    doctorId: 4,
+    lastName: 'Zygrfryd',
+    dayOfWeek: 3,
+    hourOpen:'19:00',
+    hourClose:'21:00',
 
 };
 
