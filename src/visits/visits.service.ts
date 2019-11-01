@@ -3,6 +3,7 @@ import { CreateVisitDto } from './dto/create-visit.dto';
 import { Visit } from './visit.entity';
 import { VisitDto } from './dto/visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
+import { DateTimeFormatter, LocalDateTime } from 'js-joda';
 import { Op } from 'sequelize';
 import { Doctor } from 'src/doctors/doctor.entity';
 import { Pantient } from 'src/pantients/pantient.entity';
@@ -81,7 +82,7 @@ export class VisitsService {
         return visit;
     }
 
-    async offset(index: number = 1): Promise<VisitOffset> {
+    async offset(index: number = 0): Promise<VisitOffset> {
         let visits = await this.visitsRepository.findAndCountAll({
             include: [Doctor, Pantient],
             limit: 100,

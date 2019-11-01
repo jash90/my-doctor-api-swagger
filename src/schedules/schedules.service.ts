@@ -74,4 +74,17 @@ export class SchedulesService {
         await schedule.destroy();
         return schedule;
     }
+
+    async search(doctorId: number): Promise<ScheduleDto[]> {
+        const schedules = await this.schedulesRepository.findAll({
+            where: {
+                doctorId
+            },
+            order: ['dayOfWeek']
+        });
+
+        return schedules.map(schedule => {
+            return new ScheduleDto(schedule);
+        });
+    }
 }

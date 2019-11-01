@@ -79,7 +79,7 @@ export class VisitsController {
 
     @Get(':index')
     @ApiOkResponse({ type: VisitOffset})
-    offset(@Param('id', new ParseIntPipe()) index: number= 1): Promise<VisitOffset> {
+    offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<VisitOffset> {
         return this.visitsService.offset(index);
     }
 
