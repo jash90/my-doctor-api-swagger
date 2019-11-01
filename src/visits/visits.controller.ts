@@ -95,4 +95,28 @@ export class VisitsController {
     search(@Param('id', new ParseIntPipe()) doctorId: number): Promise<VisitDto[]> {
         return this.visitsService.search(doctorId);
     }
+
+    @Get(':doctorId')
+    @ApiOkResponse({ type: [VisitDto] })
+    @ApiImplicitParam({ name: 'doctorId', required: true })
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    doctorVisits(
+        @Param('doctorId', new ParseIntPipe()) id: number,
+    ): Promise<VisitDto[]> {
+        return this.visitsService.doctorVisits(id);
+    }
+
+    @Get(':pantientId')
+    @ApiOkResponse({ type: [VisitDto] })
+    @ApiImplicitParam({ name: 'pantientId', required: true })
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    pantientVisits(
+        @Param('pantientId', new ParseIntPipe()) id: number,
+    ): Promise<VisitDto[]> {
+        return this.visitsService.pantientVisits(id);
+    }
+
+
 }

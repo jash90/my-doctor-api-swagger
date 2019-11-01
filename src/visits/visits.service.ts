@@ -3,7 +3,7 @@ import { CreateVisitDto } from './dto/create-visit.dto';
 import { Visit } from './visit.entity';
 import { VisitDto } from './dto/visit.dto';
 import { UpdateVisitDto } from './dto/update-visit.dto';
-import { DateTimeFormatter, LocalDateTime } from 'js-joda';
+import { DateTimeFormatter, LocalDateTime, nativeJs } from 'js-joda';
 import { Doctor } from 'src/doctors/doctor.entity';
 import { Pantient } from 'src/pantients/pantient.entity';
 import { VisitOffset } from 'src/visits/dto/visit.offset';
@@ -149,6 +149,28 @@ export class VisitsService {
             throw new HttpException('No visit found', HttpStatus.NOT_FOUND);
         }
 
+        return visits.map(visit => {
+            return new VisitDto(visit);
+        });
+    }
+
+
+    async doctorVisits(doctorId:number): Promise<VisitDto[]> {
+        const visits = await this.visitsRepository.findAll<Visit>({
+            where:{doctorId},
+            include: [Doctor, Pantient]
+        });
+        return visits.map(visit => {
+            return new VisitDto(visit);
+        });
+    }
+
+
+    async pantientVisits(pantientId:number): Promise<VisitDto[]> {
+        const visits = await this.visitsRepository.findAll<Visit>({
+            where:{pantientId},
+            include: [Doctor, Pantient]
+        });
         return visits.map(visit => {
             return new VisitDto(visit);
         });
