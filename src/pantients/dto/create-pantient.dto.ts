@@ -1,13 +1,15 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { IsString, MinLength, MaxLength, IsPhoneNumber } from 'class-validator';
+import { IsString, MinLength, MaxLength, IsPhoneNumber, IsNotEmpty } from 'class-validator';
 
 export class CreatePantientDto {
     @ApiModelProperty()
     @IsString()
+    @IsNotEmpty()
     readonly firstName: string;
 
     @ApiModelProperty()
     @IsString()
+    @IsNotEmpty()
     readonly lastName: string;
 
     @ApiModelProperty()
@@ -18,19 +20,23 @@ export class CreatePantientDto {
 
     @ApiModelProperty()
     @IsString()
+    @IsNotEmpty()
     readonly street: string;
 
     @ApiModelProperty()
     @IsString()
+    @IsNotEmpty()
     readonly city: string;
 
     @ApiModelProperty()
     @IsPhoneNumber("PL")
+    @IsNotEmpty()
     readonly phone: string;
 
     @ApiModelProperty()
     @IsString()
     @MinLength(11)
     @MaxLength(11)
+    @IsNotEmpty()
     readonly pesel: string;
 }
