@@ -12,8 +12,8 @@ export class CreatePantientDto {
 
     @ApiModelProperty()
     @IsString()
-    @MinLength(7)
-    @MaxLength(7)
+    @MinLength(6)
+    @MaxLength(6)
     readonly postcode: string;
 
     @ApiModelProperty()
