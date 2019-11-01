@@ -3,6 +3,8 @@ import { CreatePantientDto } from './dto/create-pantient.dto';
 import { Pantient } from './pantient.entity';
 import { PantientDto } from './dto/pantient.dto';
 import { UpdatePantientDto } from './dto/update-pantient.dto';
+import { PantientOffset } from './dto/pantient.offset';
+import { Visit } from 'src/visits/visit.entity';
 
 @Injectable()
 export class PantientsService {
@@ -79,5 +81,20 @@ export class PantientsService {
         const pantient = await this.getPantient(id);
         await pantient.destroy();
         return pantient;
+    }
+
+    async offset(index: number = 0): Promise<PantientOffset> {
+        let pantients = await this.pantientsRepository.findAndCountAll({
+            include: [Visit],
+            limit: 100,
+            offset: index * 100,
+            order: ['id']
+        });
+
+        let PantientDto = pantients.rows.map(pantient=>{
+            return new PantientDto(pantient);
+        })
+
+        return  {rows : PantientDto, count :pantients.count};
     }
 }

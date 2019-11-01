@@ -9,6 +9,8 @@ import {
     Req,
     UseGuards,
     Put,
+    ParseIntPipe,
+    Param,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
@@ -17,6 +19,7 @@ import { ApiUseTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { UserLoginResponseDto } from './dto/user-login-response.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserOffset } from './dto/user.offset';
 
 @Controller('users')
 @ApiUseTags('users')
@@ -73,5 +76,11 @@ export class UsersController {
     @ApiOkResponse({ type: UserDto })
     delete(@Req() request): Promise<UserDto> {
         return this.usersService.delete(request.user.id);
+    }
+    
+    @Get(':index')
+    @ApiOkResponse({ type: UserOffset})
+    offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<UserOffset> {
+        return this.usersService.offset(index);
     }
 }
