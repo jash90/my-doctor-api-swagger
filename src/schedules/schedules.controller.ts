@@ -75,4 +75,11 @@ export class SchedulesController {
     ): Promise<ScheduleEntity> {
         return this.schedulesService.delete(id);
     }
+
+    @Get(':id')
+    @ApiOkResponse({ type: ScheduleDto })
+    @ApiImplicitParam({ name: 'id', required: true })
+    search(@Param('id', new ParseIntPipe()) id: number): Promise<ScheduleDto[]> {
+        return this.schedulesService.search(id);
+    }
 }
