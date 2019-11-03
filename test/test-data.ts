@@ -5,10 +5,7 @@ import { UserDto } from './../src/users/dto/user.dto';
 import { Gender, Specialist } from '../src/shared/enum/enums';
 import { CreateUserDto } from './../src/users/dto/create-user.dto';
 import { CreateDoctorDto } from '../src/doctors/dto/create-doctor.dto';
-<<<<<<< HEAD
 import { CreatePantientDto } from '../src/pantients/dto/create-pantient.dto';
-=======
->>>>>>> 0b4cf4c482582d090e3efe8b6f0520d839aa9a87
 
 export const createUserDto1: CreateUserDto = {
     email: 'testemail@gmail.com',
@@ -114,4 +111,11 @@ export const CreatePantientDto2: CreatePantientDto ={
     city: 'San Andreas',
     phone: '666667668',
     pesel: '12345678910',
+};
 
+export class DoctorResponse extends CreateDoctorDto{
+    id: number;
+    createdAt:Date;
+    updatedAt:Date;
+    deletedAt:Date;
+}

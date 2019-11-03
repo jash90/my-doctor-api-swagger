@@ -15,11 +15,15 @@ import {
     userLoginRequestDto1,
     userLoginRequestDto2,
     userLoginRequestDto3,
+    createDoctorDto1,
+    DoctorResponse,
 } from './test-data';
 import { Doctor } from './../src/doctors/doctor.entity';
 import { Pantient } from './../src/pantients/pantient.entity';
 import { Schedule } from './../src/schedules/schedule.entity';
 import { Visit } from './../src/visits/visit.entity';
+
+import { } from "should";
 
 describe('/', () => {
     let app: INestApplication;
@@ -141,15 +145,51 @@ describe('/', () => {
     });
 
     describe('/doctors', () => {
+        const loginUser = (token) => {
+            return function (done) {
+                request(app.getHttpServer())
+                    .post('/users/login')
+                    .send(userLoginRequestDto1)
+                    .expect(HttpStatus.OK)
+                    .expect(200)
+                    .end(onResponse);
+
+                function onResponse(err, res) {
+                    token = res.body.token;
+                    return done();
+                }
+            };
+        }
+        beforeEach(loginUser(token));
+
+        it('register doctor', () => {
+            return request(app.getHttpServer())
+                .post('/doctors')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createDoctorDto1)
+                .expect(res => {
+                    let createdDoctor:DoctorResponse = createDoctorDto1 as any;
+                    let {id, createdAt, updatedAt, deletedAt} = res.body;
+                    createdDoctor.id = id;
+                    createdDoctor.createdAt = createdAt;
+                    createdDoctor.updatedAt = updatedAt;
+                    createdDoctor.deletedAt = deletedAt;
+                    expect(res.body).toEqual(createdDoctor);
+                });
+        });
+
         it('get list doctors', () => {
             return request(app.getHttpServer())
                 .get('/doctors')
                 .expect(HttpStatus.OK)
                 .expect(res => {
-                    token = res.body.token;
-                    userLoginResponseDto1.id = res.body.id;
-                    userLoginResponseDto1.token = token;
-                    expect(res.body).toEqual(userLoginResponseDto1);
+                    let createdDoctor:DoctorResponse = createDoctorDto1 as any;
+                    let {id, createdAt, updatedAt, deletedAt} = res.body[0];
+                    createdDoctor.id = id;
+                    createdDoctor.createdAt = createdAt;
+                    createdDoctor.updatedAt = updatedAt;
+                    createdDoctor.deletedAt = deletedAt;
+                    expect(res.body).toEqual([createDoctorDto1]);
                 });
         });
 
