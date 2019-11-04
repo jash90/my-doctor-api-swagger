@@ -16,11 +16,16 @@ export class VisitsService {
         private readonly visitsRepository: typeof Visit,
         @Inject('SchedulesRepository')
         private readonly schedulesRepository: typeof Schedule,
+        @Inject('DoctorsRepository')
+        private readonly doctorsRepository: typeof Doctor,
+        @Inject('PantientsRepository')
+        private readonly pantientsRepository: typeof Pantient,
     ) { }
 
     async findAll(): Promise<VisitDto[]> {
         const visits = await this.visitsRepository.findAll<Visit>({
-            include: [Doctor, Pantient]
+            include: [Doctor, Pantient],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         return visits.map(visit => {
             return new VisitDto(visit);
@@ -29,7 +34,8 @@ export class VisitsService {
 
     async findOne(id: number): Promise<VisitDto> {
         const visit = await this.visitsRepository.findByPk<Visit>(id, {
-            include: [Doctor, Pantient]
+            include: [Doctor, Pantient],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         if (!visit) {
             throw new HttpException('No visit found', HttpStatus.NOT_FOUND);
@@ -47,6 +53,18 @@ export class VisitsService {
         visit.date = new Date(date);
         visit.description = description;
 
+        let doctor = await this.doctorsRepository.findByPk(doctorId);
+
+        if (!doctor) {
+            throw new HttpException("Doctor not found", HttpStatus.NOT_FOUND);
+        }
+        
+        let pantient = await this.pantientsRepository.findByPk(pantientId);
+
+        if (!pantient) {
+            throw new HttpException("Pantient not found", HttpStatus.NOT_FOUND);
+        }
+
         let visitDay = LocalDateTime.from(nativeJs(new Date(date)));
 
         let dateVisit = await this.dateVisits(new Date(visitDay.toString()));
@@ -57,9 +75,9 @@ export class VisitsService {
 
         let create = false;
 
-        let schedules = await this.schedulesRepository.findAll({ where: { doctorId } });
+        let schedules = await this.schedulesRepository.findAll({ where: { doctorId }, attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] } });
 
-        if (schedules.length === 0){
+        if (schedules.length === 0) {
             throw new HttpException("Doctor dont have schedule", HttpStatus.NOT_FOUND);
         }
 
@@ -83,7 +101,9 @@ export class VisitsService {
     }
 
     private async getVisit(id: number): Promise<Visit> {
-        const visit = await this.visitsRepository.findByPk<Visit>(id);
+        const visit = await this.visitsRepository.findByPk<Visit>(id, {
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        });
         if (!visit) {
             throw new HttpException('No visit found', HttpStatus.NOT_FOUND);
         }
@@ -119,7 +139,8 @@ export class VisitsService {
             include: [Doctor, Pantient],
             limit: 100,
             offset: index * 100,
-            order: ['id']
+            order: ['id'],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
 
         let visitsDto = visits.rows.map(visit => {
@@ -150,7 +171,8 @@ export class VisitsService {
                         where: {
                             doctorId,
                             date: morning.toString()
-                        }
+                        },
+                        attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
                     });
                     if (!visit) {
                         freeDay.push(morning.toString());
@@ -173,7 +195,8 @@ export class VisitsService {
                 date: {
                     $between: [new Date(now), new Date(next10)]
                 }
-            }
+            },
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         if (!visits) {
             throw new HttpException('No visit found', HttpStatus.NOT_FOUND);
@@ -199,7 +222,8 @@ export class VisitsService {
     async pantientVisits(pantientId: number): Promise<VisitDto[]> {
         const visits = await this.visitsRepository.findAll<Visit>({
             where: { pantientId },
-            include: [Doctor, Pantient]
+            include: [Doctor, Pantient],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         return visits.map(visit => {
             return new VisitDto(visit);
@@ -209,7 +233,8 @@ export class VisitsService {
     async dateVisits(date: Date): Promise<Visit | null> {
         const visit = await this.visitsRepository.findOne<Visit>({
             where: { date },
-            include: [Doctor, Pantient]
+            include: [Doctor, Pantient],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
 
         return visit;

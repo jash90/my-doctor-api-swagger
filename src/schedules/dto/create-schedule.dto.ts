@@ -7,10 +7,6 @@ export class CreateScheduleDto {
     readonly doctorId: number;
 
     @ApiModelProperty()
-    @IsString()
-    readonly lastName: string;
-
-    @ApiModelProperty()
     @Min(1)
     @Max(7)
     readonly dayOfWeek: number;

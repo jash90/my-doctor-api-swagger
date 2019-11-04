@@ -88,21 +88,21 @@ export const createDoctorDto1: CreateDoctorDto = {
     specialization: Specialist.urolog
 };
 
-export const CreateDoctorDto2: CreateDoctorDto = {
-        numberPwz: '14882137',
-        firstName: 'Mark',
-        lastName: 'Sloan',
-        specialization: Specialist.chirurg_ogólny,
+export const createDoctorDto2: CreateDoctorDto = {
+    numberPwz: '14882137',
+    firstName: 'Mark',
+    lastName: 'Sloan',
+    specialization: Specialist.chirurg_ogólny,
 };
 
-export const CreateDoctorDto3: CreateDoctorDto = {
+export const createDoctorDto3: any = {
     numberPwz: '7654321',
     firstName: 'Alfred',
     lastName: 'Zygrfryd',
-    specialization: Specialist.diabetolog,
+    specialization: 'test',
 };
 
-export const CreateDoctorDto4: CreateDoctorDto = {
+export const createDoctorDto4: CreateDoctorDto = {
     numberPwz: '1234568',
     firstName: 'Zorak',
     lastName: 'Zorakowsi',
@@ -110,34 +110,27 @@ export const CreateDoctorDto4: CreateDoctorDto = {
 };
 
 
-export const CreatePantientDto1: CreatePantientDto ={
+export const createPantientDto1: CreatePantientDto = {
     firstName: 'Sweet',
     lastName: 'Johnson',
-    postcode: 'SE8-3PG',
+    postcode: 'SE-3PG',
     street: 'Grove Street',
     city: 'San Andreas',
-    phone: '111222333',
+    phone: '729141234',
     pesel: '10987654321',
 };
 
-export const CreatePantientDto2: CreatePantientDto ={
+export const createPantientDto2: CreatePantientDto = {
     firstName: 'Carl',
     lastName: 'Johnson',
-    postcode: 'SE8-3PG',
+    postcode: 'SE-3PG',
     street: 'Grove Street',
     city: 'San Andreas',
     phone: '666667668',
     pesel: '12345678910',
 };
 
-export class DoctorResponse extends CreateDoctorDto{
-    id: number;
-    createdAt:Date;
-    updatedAt:Date;
-    deletedAt:Date;
-}
-
-export const CreatePantientDto3: CreatePantientDto ={
+export const createPantientDto3: CreatePantientDto = {
     firstName: 'Ayn',
     lastName: 'Rand',
     postcode: '10-001',
@@ -147,7 +140,7 @@ export const CreatePantientDto3: CreatePantientDto ={
     pesel: '43020211111',
 };
 
-export const CreatePantientDto4: CreatePantientDto ={
+export const createPantientDto4: CreatePantientDto = {
     firstName: 'Ludwig',
     lastName: 'von Misses',
     postcode: '89-ABC',
@@ -157,99 +150,101 @@ export const CreatePantientDto4: CreatePantientDto ={
     pesel: '1231233219',
 };
 
-export const CreateScheduleDto1: CreateScheduleDto ={
+export const createPantientDto5: CreatePantientDto = {
+    firstName: '',
+    lastName: '',
+    postcode: '',
+    street: '',
+    city: '',
+    phone: '',
+    pesel: '',
+};
+
+export const createScheduleDto1: CreateScheduleDto = {
     doctorId: 2,
-    lastName: 'Sloan',
     dayOfWeek: 1,
-    hourOpen:'12:00',
-    hourClose:'14:00',
+    hourOpen: '12:00',
+    hourClose: '14:00',
 
 };
 
 
-export const CreateScheduleDto2: CreateScheduleDto ={
-    doctorId: 2,
-    lastName: 'Sloan',
+export const createScheduleDto2: CreateScheduleDto = {
+    doctorId: 1,
     dayOfWeek: 2,
-    hourOpen:'12:00',
-    hourClose:'14:00',
+    hourOpen: '12:00',
+    hourClose: '14:00',
 
 };
-export const CreateScheduleDto3: CreateScheduleDto ={
+export const createScheduleDto3: CreateScheduleDto = {
     doctorId: 1,
-    lastName: 'Stonoga',
     dayOfWeek: 3,
-    hourOpen:'08:00',
-    hourClose:'16:00',
+    hourOpen: '08:00',
+    hourClose: '16:00',
 
 };
 
-export const CreateScheduleDto4: CreateScheduleDto ={
+export const createScheduleDto4: CreateScheduleDto = {
     doctorId: 2,
-    lastName: 'Sloan',
     dayOfWeek: 1,
-    hourOpen:'08:00',
-    hourClose:'14:00',
+    hourOpen: '08:00',
+    hourClose: '14:00',
 
 };
 
-export const CreateScheduleDto5: CreateScheduleDto ={
+export const createScheduleDto5: CreateScheduleDto = {
     doctorId: 1,
-    lastName: 'Stonoga',
     dayOfWeek: 5,
-    hourOpen:'13:00',
-    hourClose:'16:00',
+    hourOpen: '13:00',
+    hourClose: '16:00',
 
 };
-export const CreateScheduleDto6: CreateScheduleDto ={
+export const createScheduleDto6: CreateScheduleDto = {
     doctorId: 1,
-    lastName: 'Stonoga',
     dayOfWeek: 4,
-    hourOpen:'10:00',
-    hourClose:'11:00',
+    hourOpen: '10:00',
+    hourClose: '11:00',
 
 };
 
-export const CreateScheduleDto7: CreateScheduleDto ={
+export const createScheduleDto7: CreateScheduleDto = {
     doctorId: 3,
-    lastName: 'Zorakowsi',
     dayOfWeek: 4,
-    hourOpen:'06:00',
-    hourClose:'07:20',
+    hourOpen: '06:00',
+    hourClose: '07:20',
 
 };
 
-export const CreateScheduleDto8: CreateScheduleDto ={
+export const createScheduleDto8: CreateScheduleDto = {
     doctorId: 4,
-    lastName: 'Zygrfryd',
     dayOfWeek: 3,
-    hourOpen:'19:00',
-    hourClose:'21:00',
+    hourOpen: '19:00',
+    hourClose: '21:00',
 
 };
 
-export const CreateVisitDto1 : CreateVisitDto ={
+export const createVisitDto1: CreateVisitDto = {
     doctorId: 2,
     pantientId: 2,
     date: new Date('2019-11-04T12:50:57'),
     description: 'need operation of brain'
 };
 
-export const CreateVisitDto2 : CreateVisitDto ={
+export const createVisitDto2: CreateVisitDto = {
     doctorId: 2,
     pantientId: 1,
     date: new Date('2019-11-04T13:20:57'),
     description: 'consultation'
 };
 
-export const CreateVisitDto3 : CreateVisitDto ={
+export const createVisitDto3: CreateVisitDto = {
     doctorId: 1,
     pantientId: 3,
     date: new Date('2019-11-08T14:11:57'),
     description: 'consultation'
 };
 
-export const CreateVisitDto4 : CreateVisitDto ={
+export const createVisitDto4: CreateVisitDto = {
     doctorId: 1,
     pantientId: 4,
     date: new Date('2019-11-07T10:23:57'),

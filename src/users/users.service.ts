@@ -24,14 +24,18 @@ export class UsersService {
     }
 
     async findAll(): Promise<UserDto[]> {
-        const users = await this.usersRepository.findAll<User>();
+        const users = await this.usersRepository.findAll<User>({
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        });
         return users.map(user => {
             return new UserDto(user);
         });
     }
 
     async getUser(id: string): Promise<UserDto> {
-        const user = await this.usersRepository.findByPk<User>(id);
+        const user = await this.usersRepository.findByPk<User>(id, {
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        });
         if (!user) {
             throw new HttpException(
                 'User with given id not found',
@@ -45,6 +49,7 @@ export class UsersService {
     async getUserByEmail(email: string): Promise<User> {
         return await this.usersRepository.findOne<User>({
             where: { email },
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
     }
 
@@ -103,7 +108,7 @@ export class UsersService {
     }
 
     async update(id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
-        const user = await this.usersRepository.findByPk<User>(id);
+        const user = await this.usersRepository.findByPk<User>(id, { attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] } });
         if (!user) {
             throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
         }
@@ -122,7 +127,9 @@ export class UsersService {
     }
 
     async delete(id: string): Promise<UserDto> {
-        const user = await this.usersRepository.findByPk<User>(id);
+        const user = await this.usersRepository.findByPk<User>(id, {
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        });
         await user.destroy();
         return new UserDto(user);
     }
@@ -139,14 +146,15 @@ export class UsersService {
         let users = await this.usersRepository.findAndCountAll({
             limit: 100,
             offset: index * 100,
-            order: ['id']
+            order: ['id'],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
 
-        let usersDto = users.rows.map(user=>{
+        let usersDto = users.rows.map(user => {
             return new UserDto(user);
         })
 
-        return  {rows : usersDto, count :users.count};
+        return { rows: usersDto, count: users.count };
     }
 }
 

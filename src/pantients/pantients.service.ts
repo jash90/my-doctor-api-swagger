@@ -11,10 +11,11 @@ export class PantientsService {
     constructor(
         @Inject('PantientsRepository')
         private readonly pantientsRepository: typeof Pantient,
-    ) {}
+    ) { }
 
     async findAll(): Promise<PantientDto[]> {
         const pantients = await this.pantientsRepository.findAll<Pantient>({
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         return pantients.map(pantient => {
             return new PantientDto(pantient);
@@ -23,6 +24,7 @@ export class PantientsService {
 
     async findOne(id: number): Promise<PantientDto> {
         const pantient = await this.pantientsRepository.findByPk<Pantient>(id, {
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         if (!pantient) {
             throw new HttpException('No pantient found', HttpStatus.NOT_FOUND);
@@ -49,7 +51,9 @@ export class PantientsService {
     }
 
     private async getPantient(id: number): Promise<Pantient> {
-        const pantient = await this.pantientsRepository.findByPk<Pantient>(id);
+        const pantient = await this.pantientsRepository.findByPk<Pantient>(id, {
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        });
         if (!pantient) {
             throw new HttpException('No pantient found', HttpStatus.NOT_FOUND);
         }
@@ -88,13 +92,14 @@ export class PantientsService {
             include: [Visit],
             limit: 100,
             offset: index * 100,
-            order: ['id']
+            order: ['id'],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
 
-        let PantientDto = pantients.rows.map(pantient=>{
+        let PantientDto = pantients.rows.map(pantient => {
             return new PantientDto(pantient);
         })
 
-        return  {rows : PantientDto, count :pantients.count};
+        return { rows: PantientDto, count: pantients.count };
     }
 }

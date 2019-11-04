@@ -16,7 +16,14 @@ import {
     userLoginRequestDto2,
     userLoginRequestDto3,
     createDoctorDto1,
-    DoctorResponse,
+    createDoctorDto2,
+    createDoctorDto3,
+    createDoctorDto4,
+    createVisitDto1,
+    createPantientDto1,
+    createPantientDto5,
+    createScheduleDto1,
+    createScheduleDto2
 } from './test-data';
 import { Doctor } from './../src/doctors/doctor.entity';
 import { Pantient } from './../src/pantients/pantient.entity';
@@ -32,6 +39,7 @@ describe('/', () => {
     let token: string;
 
     beforeAll(async () => {
+        //     process.env.NODE_ENV = 'test';
         const module = await Test.createTestingModule({
             imports: [AppModule],
             providers: [
@@ -144,7 +152,7 @@ describe('/', () => {
 
     });
 
-    describe('/doctors', () => {
+    describe('/models', () => {
         const loginUser = (token) => {
             return function (done) {
                 request(app.getHttpServer())
@@ -162,14 +170,14 @@ describe('/', () => {
         }
         beforeEach(loginUser(token));
 
-        it('register doctor', () => {
+        it('create doctor', () => {
             return request(app.getHttpServer())
                 .post('/doctors')
                 .set('Authorization', 'Bearer ' + token)
                 .send(createDoctorDto1)
                 .expect(res => {
-                    let createdDoctor:DoctorResponse = createDoctorDto1 as any;
-                    let {id, createdAt, updatedAt, deletedAt} = res.body;
+                    let createdDoctor: any = Object.assign({}, createDoctorDto1);
+                    let { id, createdAt, updatedAt, deletedAt } = res.body;
                     createdDoctor.id = id;
                     createdDoctor.createdAt = createdAt;
                     createdDoctor.updatedAt = updatedAt;
@@ -178,20 +186,109 @@ describe('/', () => {
                 });
         });
 
-        it('get list doctors', () => {
+        it('create pantient', () => {
             return request(app.getHttpServer())
-                .get('/doctors')
-                .expect(HttpStatus.OK)
+                .post('/pantients')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createPantientDto1)
                 .expect(res => {
-                    let createdDoctor:DoctorResponse = createDoctorDto1 as any;
-                    let {id, createdAt, updatedAt, deletedAt} = res.body[0];
-                    createdDoctor.id = id;
-                    createdDoctor.createdAt = createdAt;
-                    createdDoctor.updatedAt = updatedAt;
-                    createdDoctor.deletedAt = deletedAt;
-                    expect(res.body).toEqual([createDoctorDto1]);
+                    let createPantient: any = Object.assign({}, createPantientDto1);
+                    let { id, createdAt, updatedAt, deletedAt } = res.body;
+                    createPantient.id = id;
+                    createPantient.createdAt = createdAt;
+                    createPantient.updatedAt = updatedAt;
+                    createPantient.deletedAt = deletedAt;
+                    expect(res.body).toEqual(createPantient);
                 });
         });
+
+        it('create schedule', () => {
+            return request(app.getHttpServer())
+                .post('/schedules')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createScheduleDto2)
+               // .expect(HttpStatus.CREATED)
+                .expect(res=>{
+                    let createSchedule: any = Object.assign({}, createScheduleDto2);
+                    let { id, createdAt, updatedAt, deletedAt } = res.body;
+                    createSchedule.id = id;
+                    createSchedule.doctorId= createScheduleDto2.doctorId.toString();
+                    createSchedule.hourOpen+=":00";
+                    createSchedule.hourClose+=":00";
+                    createSchedule.createdAt = createdAt;
+                    createSchedule.updatedAt = updatedAt;
+                    createSchedule.deletedAt = deletedAt;
+                    expect(res.body).toEqual(createSchedule);
+                 });
+        });
+
+
+        it('create schedule with not found doctor', () => {
+            return request(app.getHttpServer())
+                .post('/schedules')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createScheduleDto1)
+                .expect(HttpStatus.NOT_FOUND)
+                .expect(res=>{
+                    expect(res.body.message).toEqual("Doctor not found");
+                });
+        });
+
+        it('create pantient with empty data', () => {
+            return request(app.getHttpServer())
+                .post('/pantients')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createPantientDto5)
+                .expect(HttpStatus.BAD_REQUEST);
+        });
+
+
+
+        // it('get list doctors', async () => {
+        //     return request(app.getHttpServer())
+        //         .get('/doctors')
+        //         .expect(HttpStatus.OK)
+        //         .expect(res => {
+        //             let createdDoctor: any = Object.assign({}, createDoctorDto1);
+        //             createdDoctor.id = res.body[0].id;
+        //             expect(res.body).toEqual([createdDoctor]);
+        //         });
+        // });
+
+        it('specialization enum validation', async () => {
+            return request(app.getHttpServer())
+                .post('/doctors')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createDoctorDto3)
+                .expect(HttpStatus.BAD_REQUEST)
+                .expect(res => {
+                    expect(res.body.message[0].constraints.isEnum).toEqual('specialization must be a valid enum value');
+                })
+        });
+
+        it('validation visit doctor or pantient dont exist', async () => {
+            return request(app.getHttpServer())
+                .post('/visits')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createVisitDto1)
+                .expect(HttpStatus.NOT_FOUND)
+                .expect(res => {
+                    expect(res.body.message).toEqual('Doctor not found');
+                })
+        });
+
+        // it('update doctor', () => {
+        //     return request(app.getHttpServer())
+        //         .put('/doctors/1')
+        //         .set('Authorization', 'Bearer ' + token)
+        //         .send(createDoctorDto2)
+        //         .expect(HttpStatus.OK)
+        //         .expect(res => {
+        //             let createdDoctor: any = Object.assign({}, createDoctorDto2);
+        //             createdDoctor.id = res.body.id;
+        //             expect(res.body).toEqual(createDoctorDto2);
+        //         });
+        //  });
 
         describe('POST', () => {
         })

@@ -8,11 +8,6 @@ export class UpdateScheduleDto {
     readonly doctorId?: number;
 
     @ApiModelProperty()
-    @IsString()
-    @IsOptional()
-    readonly lastName?: string;
-
-    @ApiModelProperty()
     @Min(1)
     @Max(7)
     @IsOptional()

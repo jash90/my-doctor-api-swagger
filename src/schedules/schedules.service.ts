@@ -11,10 +11,13 @@ export class SchedulesService {
     constructor(
         @Inject('SchedulesRepository')
         private readonly schedulesRepository: typeof Schedule,
-    ) { }
+        @Inject('DoctorsRepository')
+        private readonly doctorsRepository: typeof Doctor,
+        ) { }
 
     async findAll(): Promise<ScheduleDto[]> {
         const schedules = await this.schedulesRepository.findAll<Schedule>({
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         return schedules.map(schedule => {
             return new ScheduleDto(schedule);
@@ -23,6 +26,7 @@ export class SchedulesService {
 
     async findOne(id: number): Promise<ScheduleDto> {
         const schedule = await this.schedulesRepository.findByPk<Schedule>(id, {
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         if (!schedule) {
             throw new HttpException('No schedule found', HttpStatus.NOT_FOUND);
@@ -37,6 +41,12 @@ export class SchedulesService {
         schedule.dayOfWeek = createScheduleDto.dayOfWeek;
         schedule.hourOpen = createScheduleDto.hourOpen;
         schedule.hourClose = createScheduleDto.hourClose;
+
+        let doctor = await this.doctorsRepository.findByPk(createScheduleDto.doctorId);
+
+        if (!doctor){
+            throw new HttpException('Doctor not found', HttpStatus.NOT_FOUND);
+        }
 
         try {
             return await schedule.save();
@@ -64,6 +74,12 @@ export class SchedulesService {
         schedule.hourOpen = updateScheduleDto.hourOpen || schedule.hourOpen;
         schedule.hourClose = updateScheduleDto.hourClose || schedule.hourClose;
 
+        let doctor = this.doctorsRepository.findByPk(id);
+
+        if (!doctor){
+            throw new HttpException('Doctor not found', HttpStatus.NOT_FOUND);
+        }
+
         try {
             return await schedule.save();
         } catch (err) {
@@ -82,6 +98,7 @@ export class SchedulesService {
             where: {
                 doctorId
             },
+            attributes: { exclude: ['createdAt','updatedAt','deletedAt'] },
             order: ['dayOfWeek']
         });
 
@@ -95,13 +112,14 @@ export class SchedulesService {
             include: [Doctor],
             limit: 100,
             offset: index * 100,
-            order: ['id']
+            order: ['id'],
+            attributes: { exclude: ['createdAt','updatedAt','deletedAt'] }
         });
 
-        let ScheduleDto = schedules.rows.map(schedules=>{
+        let ScheduleDto = schedules.rows.map(schedules => {
             return new ScheduleDto(schedules);
         })
 
-        return  {rows : ScheduleDto, count :schedules.count};
+        return { rows: ScheduleDto, count: schedules.count };
     }
 }

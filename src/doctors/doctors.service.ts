@@ -12,10 +12,11 @@ export class DoctorsService {
     constructor(
         @Inject('DoctorsRepository')
         private readonly doctorsRepository: typeof Doctor,
-    ) {}
+    ) { }
 
     async findAll(): Promise<DoctorDto[]> {
         const doctors = await this.doctorsRepository.findAll<Doctor>({
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         return doctors.map(doctor => {
             return new DoctorDto(doctor);
@@ -24,6 +25,7 @@ export class DoctorsService {
 
     async findOne(id: number): Promise<DoctorDto> {
         const doctor = await this.doctorsRepository.findByPk<Doctor>(id, {
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         if (!doctor) {
             throw new HttpException('No doctor found', HttpStatus.NOT_FOUND);
@@ -47,7 +49,9 @@ export class DoctorsService {
     }
 
     private async getDoctor(id: number): Promise<Doctor> {
-        const doctor = await this.doctorsRepository.findByPk<Doctor>(id);
+        const doctor = await this.doctorsRepository.findByPk<Doctor>(id, {
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        });
         if (!doctor) {
             throw new HttpException('No doctor found', HttpStatus.NOT_FOUND);
         }
@@ -84,13 +88,14 @@ export class DoctorsService {
             include: [Visit, Schedule],
             limit: 100,
             offset: index * 100,
-            order: ['id']
+            order: ['id'],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
 
-        let DoctorsDto = doctors.rows.map(doctor=>{
+        let DoctorsDto = doctors.rows.map(doctor => {
             return new DoctorsDto(doctor);
         })
 
-        return  {rows : DoctorsDto, count :doctors.count};
+        return { rows: DoctorsDto, count: doctors.count };
     }
 }
