@@ -136,14 +136,15 @@ export class DoctorResponse extends CreateDoctorDto{
     updatedAt:Date;
     deletedAt:Date;
 }
+
 export const CreatePantientDto3: CreatePantientDto ={
-    firstName: 'Karl',
-    lastName: 'Marx',
-    postcode: 'CC-CP1',
-    street: 'Karl Marx St.',
-    city: 'Tier',
+    firstName: 'Ayn',
+    lastName: 'Rand',
+    postcode: '10-001',
+    street: 'Kensico Cemetery Valhalla',
+    city: 'New York',
     phone: '444333222',
-    pesel: '05051811111',
+    pesel: '43020211111',
 };
 
 export const CreatePantientDto4: CreatePantientDto ={
