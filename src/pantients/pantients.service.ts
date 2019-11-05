@@ -22,7 +22,7 @@ export class PantientsService {
         });
     }
 
-    async findOne(id: number): Promise<PantientDto> {
+    async findOne(id: string): Promise<PantientDto> {
         const pantient = await this.pantientsRepository.findByPk<Pantient>(id, {
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
@@ -50,7 +50,7 @@ export class PantientsService {
         }
     }
 
-    private async getPantient(id: number): Promise<Pantient> {
+    private async getPantient(id: string): Promise<Pantient> {
         const pantient = await this.pantientsRepository.findByPk<Pantient>(id, {
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
@@ -62,7 +62,7 @@ export class PantientsService {
     }
 
     async update(
-        id: number,
+        id: string,
         updatePantientDto: UpdatePantientDto,
     ): Promise<Pantient> {
         const pantient = await this.getPantient(id);
@@ -81,7 +81,7 @@ export class PantientsService {
         }
     }
 
-    async delete(id: number): Promise<Pantient> {
+    async delete(id: string): Promise<Pantient> {
         const pantient = await this.getPantient(id);
         await pantient.destroy();
         return pantient;

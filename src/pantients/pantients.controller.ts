@@ -40,7 +40,7 @@ export class PantientsController {
     @Get(':id')
     @ApiOkResponse({ type: PantientDto })
     @ApiImplicitParam({ name: 'id', required: true })
-    findOne(@Param('id', new ParseIntPipe()) id: number): Promise<PantientDto> {
+    findOne(@Param('id', new ParseIntPipe()) id: string): Promise<PantientDto> {
         return this.pantientsService.findOne(id);
     }
 
@@ -60,7 +60,7 @@ export class PantientsController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     update(
-        @Param('id', new ParseIntPipe()) id: number,
+        @Param('id', new ParseIntPipe()) id: string,
         @Body() updatePantientDto: UpdatePantientDto,
     ): Promise<PantientEntity> {
         return this.pantientsService.update(id, updatePantientDto);
@@ -72,7 +72,7 @@ export class PantientsController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     delete(
-        @Param('id', new ParseIntPipe()) id: number,
+        @Param('id', new ParseIntPipe()) id: string,
     ): Promise<PantientEntity> {
         return this.pantientsService.delete(id);
     }

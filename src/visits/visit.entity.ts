@@ -25,15 +25,15 @@ export class Visit extends Model<Visit> {
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.BIGINT)
-    id: number;
+    id: string;
 
     @ForeignKey(() => Doctor)
     @Column({ type: DataType.BIGINT, field: 'doctor_id' })
-    doctorId: number;
+    doctorId:string;
 
     @ForeignKey(() => Pantient)
     @Column({ type: DataType.BIGINT, field: 'pantient_id' })
-    pantientId: number;
+    pantientId: string;
 
     @Column(DataType.DATE)
     date: Date;

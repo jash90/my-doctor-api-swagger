@@ -4,7 +4,7 @@ import { Pantient } from '../pantient.entity';
 
 export class PantientDto {
     @ApiModelProperty()
-    readonly id: number;
+    readonly id: string;
 
     @ApiModelProperty()
     readonly firstName: string;

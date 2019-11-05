@@ -4,7 +4,7 @@ import { IsString, MinLength, MaxLength, IsPhoneNumber, IsMilitaryTime, Max, Min
 export class CreateScheduleDto {
     @ApiModelProperty()
     @IsNumber()
-    readonly doctorId: number;
+    readonly doctorId: string;
 
     @ApiModelProperty()
     @Min(1)

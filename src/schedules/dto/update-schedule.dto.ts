@@ -5,7 +5,7 @@ export class UpdateScheduleDto {
     @ApiModelProperty()
     @IsNumber()
     @IsOptional()
-    readonly doctorId?: number;
+    readonly doctorId?: string;
 
     @ApiModelProperty()
     @Min(1)

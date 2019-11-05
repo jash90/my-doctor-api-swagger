@@ -40,7 +40,7 @@ export class DoctorsController {
     @Get(':id')
     @ApiOkResponse({ type: DoctorDto })
     @ApiImplicitParam({ name: 'id', required: true })
-    findOne(@Param('id', new ParseIntPipe()) id: number): Promise<DoctorDto> {
+    findOne(@Param('id', new ParseIntPipe()) id: string): Promise<DoctorDto> {
         return this.doctorsService.findOne(id);
     }
 
@@ -60,7 +60,7 @@ export class DoctorsController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     update(
-        @Param('id', new ParseIntPipe()) id: number,
+        @Param('id', new ParseIntPipe()) id: string,
         @Body() updateDoctorDto: UpdateDoctorDto,
     ): Promise<DoctorEntity> {
         return this.doctorsService.update(id, updateDoctorDto);
@@ -72,7 +72,7 @@ export class DoctorsController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     delete(
-        @Param('id', new ParseIntPipe()) id: number,
+        @Param('id', new ParseIntPipe()) id: string,
     ): Promise<DoctorEntity> {
         return this.doctorsService.delete(id);
     }

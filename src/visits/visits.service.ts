@@ -32,7 +32,7 @@ export class VisitsService {
         });
     }
 
-    async findOne(id: number): Promise<VisitDto> {
+    async findOne(id: string): Promise<VisitDto> {
         const visit = await this.visitsRepository.findByPk<Visit>(id, {
             include: [Doctor, Pantient],
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
@@ -97,7 +97,7 @@ export class VisitsService {
         }
     }
 
-    private async getVisit(id: number): Promise<Visit> {
+    private async getVisit(id: string): Promise<Visit> {
         const visit = await this.visitsRepository.findByPk<Visit>(id, {
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
@@ -109,7 +109,7 @@ export class VisitsService {
     }
 
     async update(
-        id: number,
+        id: string,
         updateVisitDto: UpdateVisitDto,
     ): Promise<Visit> {
         const visit = await this.getVisit(id);
@@ -125,7 +125,7 @@ export class VisitsService {
         }
     }
 
-    async delete(id: number): Promise<Visit> {
+    async delete(id: string): Promise<Visit> {
         const visit = await this.getVisit(id);
         await visit.destroy();
         return visit;
@@ -147,7 +147,7 @@ export class VisitsService {
         return { rows: visitsDto, count: visits.count };
     }
 
-    async freeVisit(doctorId: number): Promise<string[]> {
+    async freeVisit(doctorId: string): Promise<string[]> {
         let freeDay: string[] = ["test"];
         let schedules = await this.schedulesRepository.findAll({
             where: {
@@ -181,7 +181,7 @@ export class VisitsService {
         return ["test"];
     }
 
-    async search(doctorId: number): Promise<VisitDto[]> {
+    async search(doctorId: string): Promise<VisitDto[]> {
         const now = LocalDateTime.now().toLocalDate().toString();
         const next10 = LocalDateTime.now().plusDays(100).toString();
 
@@ -216,7 +216,7 @@ export class VisitsService {
     }
 
 
-    async pantientVisits(pantientId: number): Promise<VisitDto[]> {
+    async pantientVisits(pantientId: string): Promise<VisitDto[]> {
         const visits = await this.visitsRepository.findAll<Visit>({
             where: { pantientId },
             include: [Doctor, Pantient],
