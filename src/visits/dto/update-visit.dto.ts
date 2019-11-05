@@ -5,12 +5,12 @@ export class UpdateVisitDto {
     @ApiModelProperty()
     @IsNumber()
     @IsOptional()
-    readonly doctorId?: string;
+    readonly doctorId?: number;
 
     @ApiModelProperty()
     @IsNumber()
     @IsOptional()
-    readonly pantientId?: string;
+    readonly pantientId?: number;
 
     @ApiModelProperty()
     @IsISO8601()

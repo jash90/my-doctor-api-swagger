@@ -40,7 +40,7 @@ export class VisitsController {
     @Get(':id')
     @ApiOkResponse({ type: VisitDto })
     @ApiImplicitParam({ name: 'id', required: true })
-    findOne(@Param('id', new ParseIntPipe()) id: string): Promise<VisitDto> {
+    findOne(@Param('id', new ParseIntPipe()) id: number): Promise<VisitDto> {
         return this.visitsService.findOne(id);
     }
 
@@ -60,7 +60,7 @@ export class VisitsController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     update(
-        @Param('id', new ParseIntPipe()) id: string,
+        @Param('id', new ParseIntPipe()) id: number,
         @Body() updateVisitDto: UpdateVisitDto,
     ): Promise<VisitEntity> {
         return this.visitsService.update(id, updateVisitDto);
@@ -72,7 +72,7 @@ export class VisitsController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     delete(
-        @Param('id', new ParseIntPipe()) id: string,
+        @Param('id', new ParseIntPipe()) id: number,
     ): Promise<VisitEntity> {
         return this.visitsService.delete(id);
     }
@@ -85,14 +85,14 @@ export class VisitsController {
 
     @Get('freeVisit/:id')
     @ApiOkResponse({ type: VisitOffset})
-    freeVisit(@Param('id', new ParseIntPipe()) index: string): Promise<string[]> {
+    freeVisit(@Param('id', new ParseIntPipe()) index: number): Promise<string[]> {
         return this.visitsService.freeVisit(index);
     }
 
     @Get(':id')
     @ApiOkResponse({ type: VisitDto })
     @ApiImplicitParam({ name: 'id', required: true })
-    search(@Param('id', new ParseIntPipe()) doctorId: string): Promise<VisitDto[]> {
+    search(@Param('id', new ParseIntPipe()) doctorId: number): Promise<VisitDto[]> {
         return this.visitsService.search(doctorId);
     }
 
@@ -102,7 +102,7 @@ export class VisitsController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     doctorVisits(
-        @Param('doctorId', new ParseIntPipe()) id: string,
+        @Param('doctorId', new ParseIntPipe()) id: number,
     ): Promise<VisitDto[]> {
         return this.visitsService.doctorVisits(id);
     }
@@ -113,7 +113,7 @@ export class VisitsController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     pantientVisits(
-        @Param('pantientId', new ParseIntPipe()) id: string,
+        @Param('pantientId', new ParseIntPipe()) id: number,
     ): Promise<VisitDto[]> {
         return this.visitsService.pantientVisits(id);
     }

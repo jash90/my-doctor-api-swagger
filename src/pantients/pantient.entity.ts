@@ -23,7 +23,7 @@ export class Pantient extends Model<Pantient> {
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.BIGINT)
-    id: string;
+    id: number;
 
     @Column({ field: 'first_name' })
     firstName: string;

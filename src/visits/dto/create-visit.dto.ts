@@ -4,11 +4,11 @@ import { IsString, MinLength, MaxLength, IsPhoneNumber, IsMilitaryTime, Max, Min
 export class CreateVisitDto {
     @ApiModelProperty()
     @IsNumber()
-    readonly doctorId: string;
+    readonly doctorId: number;
 
     @ApiModelProperty()
     @IsNumber()
-    readonly pantientId: string;
+    readonly pantientId: number;
 
     @ApiModelProperty()
     @IsISO8601()

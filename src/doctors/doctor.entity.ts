@@ -25,7 +25,7 @@ export class Doctor extends Model<Doctor> {
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.BIGINT)
-    id: string;
+    id: number;
 
     @Length({
         min: 7, max: 7,

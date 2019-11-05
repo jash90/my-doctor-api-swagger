@@ -40,7 +40,7 @@ export class SchedulesController {
     @Get(':id')
     @ApiOkResponse({ type: ScheduleDto })
     @ApiImplicitParam({ name: 'id', required: true })
-    findOne(@Param('id', new ParseIntPipe()) id: string): Promise<ScheduleDto> {
+    findOne(@Param('id', new ParseIntPipe()) id: number): Promise<ScheduleDto> {
         return this.schedulesService.findOne(id);
     }
 
@@ -60,7 +60,7 @@ export class SchedulesController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     update(
-        @Param('id', new ParseIntPipe()) id: string,
+        @Param('id', new ParseIntPipe()) id: number,
         @Body() updateScheduleDto: UpdateScheduleDto,
     ): Promise<ScheduleEntity> {
         return this.schedulesService.update(id, updateScheduleDto);
@@ -72,7 +72,7 @@ export class SchedulesController {
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     delete(
-        @Param('id', new ParseIntPipe()) id: string,
+        @Param('id', new ParseIntPipe()) id: number,
     ): Promise<ScheduleEntity> {
         return this.schedulesService.delete(id);
     }
@@ -80,7 +80,7 @@ export class SchedulesController {
     @Get(':id')
     @ApiOkResponse({ type: ScheduleDto })
     @ApiImplicitParam({ name: 'id', required: true })
-    search(@Param('id', new ParseIntPipe()) id: string): Promise<ScheduleDto[]> {
+    search(@Param('id', new ParseIntPipe()) id: number): Promise<ScheduleDto[]> {
         return this.schedulesService.search(id);
     }
 

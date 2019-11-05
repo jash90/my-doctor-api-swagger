@@ -23,7 +23,7 @@ export class DoctorsService {
         });
     }
 
-    async findOne(id: string): Promise<DoctorDto> {
+    async findOne(id: number): Promise<DoctorDto> {
         const doctor = await this.doctorsRepository.findByPk<Doctor>(id, {
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
@@ -48,7 +48,7 @@ export class DoctorsService {
         }
     }
 
-    private async getDoctor(id: string): Promise<Doctor> {
+    private async getDoctor(id: number): Promise<Doctor> {
         const doctor = await this.doctorsRepository.findByPk<Doctor>(id, {
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
@@ -60,7 +60,7 @@ export class DoctorsService {
     }
 
     async update(
-        id: string,
+        id: number,
         updateDoctorDto: UpdateDoctorDto,
     ): Promise<Doctor> {
         const doctor = await this.getDoctor(id);
@@ -77,7 +77,7 @@ export class DoctorsService {
         }
     }
 
-    async delete(id: string): Promise<Doctor> {
+    async delete(id: number): Promise<Doctor> {
         const doctor = await this.getDoctor(id);
         await doctor.destroy();
         return doctor;

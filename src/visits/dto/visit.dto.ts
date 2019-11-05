@@ -3,10 +3,10 @@ import { Visit } from '../visit.entity';
 
 export class VisitDto {
     @ApiModelProperty()
-    readonly id: string;
+    readonly id: number;
 
     @ApiModelProperty()
-    readonly doctorId: string;
+    readonly doctorId: number;
 
     @ApiModelProperty()
     readonly doctorFirstName: string;
@@ -15,7 +15,7 @@ export class VisitDto {
     readonly doctorLastName: string;
 
     @ApiModelProperty()
-    readonly pantientId: string;
+    readonly pantientId: number;
 
     @ApiModelProperty()
     readonly pantientFirstName: string;

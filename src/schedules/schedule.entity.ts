@@ -25,11 +25,11 @@ export class Schedule extends Model<Schedule> {
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.BIGINT)
-    id: string;
+    id: number;
 
     @ForeignKey(() => Doctor)
     @Column({ type: DataType.BIGINT, field: 'doctor_id' })
-    doctorId: string;
+    doctorId: number;
    
     @Min(1)
     @Max(7)

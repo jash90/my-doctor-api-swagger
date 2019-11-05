@@ -5,7 +5,7 @@ import { Doctor } from '../doctor.entity';
 
 export class DoctorDto {
     @ApiModelProperty()
-    readonly id: string;
+    readonly id: number;
 
     @ApiModelProperty()
     readonly numberPwz: string;

@@ -24,7 +24,7 @@ export class SchedulesService {
         });
     }
 
-    async findOne(id: string): Promise<ScheduleDto> {
+    async findOne(id: number): Promise<ScheduleDto> {
         const schedule = await this.schedulesRepository.findByPk<Schedule>(id, {
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
@@ -55,7 +55,7 @@ export class SchedulesService {
         }
     }
 
-    private async getSchedule(id: string): Promise<Schedule> {
+    private async getSchedule(id: number): Promise<Schedule> {
         const schedule = await this.schedulesRepository.findByPk<Schedule>(id);
         if (!schedule) {
             throw new HttpException('No schedule found', HttpStatus.NOT_FOUND);
@@ -65,7 +65,7 @@ export class SchedulesService {
     }
 
     async update(
-        id: string,
+        id: number,
         updateScheduleDto: UpdateScheduleDto,
     ): Promise<Schedule> {
         const schedule = await this.getSchedule(id);
@@ -87,13 +87,13 @@ export class SchedulesService {
         }
     }
 
-    async delete(id: string): Promise<Schedule> {
+    async delete(id: number): Promise<Schedule> {
         const schedule = await this.getSchedule(id);
         await schedule.destroy();
         return schedule;
     }
 
-    async search(doctorId: string): Promise<ScheduleDto[]> {
+    async search(doctorId: number): Promise<ScheduleDto[]> {
         const schedules = await this.schedulesRepository.findAll({
             where: {
                 doctorId
