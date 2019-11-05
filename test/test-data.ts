@@ -171,14 +171,14 @@ export const createScheduleDto1: CreateScheduleDto = {
 
 export const createScheduleDto2: CreateScheduleDto = {
     doctorId: 1,
-    dayOfWeek: 2,
+    dayOfWeek: 3,
     hourOpen: '12:00',
     hourClose: '14:00',
 
 };
 export const createScheduleDto3: CreateScheduleDto = {
     doctorId: 1,
-    dayOfWeek: 3,
+    dayOfWeek: 8,
     hourOpen: '08:00',
     hourClose: '16:00',
 
@@ -231,22 +231,26 @@ export const createVisitDto1: CreateVisitDto = {
 };
 
 export const createVisitDto2: CreateVisitDto = {
-    doctorId: 2,
+    doctorId: 1,
     pantientId: 1,
-    date: new Date('2019-11-04T13:20:57'),
+    date: new Date('2019-11-06T13:20:57'),
     description: 'consultation'
 };
 
 export const createVisitDto3: CreateVisitDto = {
     doctorId: 1,
-    pantientId: 3,
-    date: new Date('2019-11-08T14:11:57'),
+    pantientId: 1,
+    date: new Date('2019-11-05T14:11:57'),
     description: 'consultation'
 };
 
-export const createVisitDto4: CreateVisitDto = {
-    doctorId: 1,
-    pantientId: 4,
-    date: new Date('2019-11-07T10:23:57'),
-    description: 'consultation'
+export const responseVisit: any = {
+    date: "2019-11-06T12:20:57.000Z",
+    description: "consultation",
+    doctorFirstName: "Zbigniew",
+    doctorId: "1",
+    doctorLastName: "Stonoga",
+    pantientFirstName: "Sweet",
+    pantientId: "1",
+    pantientLastName: "Johnson",
 };

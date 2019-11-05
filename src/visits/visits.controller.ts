@@ -83,7 +83,7 @@ export class VisitsController {
         return this.visitsService.offset(index);
     }
 
-    @Get(':id')
+    @Get('freeVisit/:id')
     @ApiOkResponse({ type: VisitOffset})
     freeVisit(@Param('id', new ParseIntPipe()) index: number): Promise<string[]> {
         return this.visitsService.freeVisit(index);
@@ -96,7 +96,7 @@ export class VisitsController {
         return this.visitsService.search(doctorId);
     }
 
-    @Get(':doctorId')
+    @Get('doctor/:doctorId')
     @ApiOkResponse({ type: [VisitDto] })
     @ApiImplicitParam({ name: 'doctorId', required: true })
     @ApiBearerAuth()
@@ -107,7 +107,7 @@ export class VisitsController {
         return this.visitsService.doctorVisits(id);
     }
 
-    @Get(':pantientId')
+    @Get('pantient/:pantientId')
     @ApiOkResponse({ type: [VisitDto] })
     @ApiImplicitParam({ name: 'pantientId', required: true })
     @ApiBearerAuth()

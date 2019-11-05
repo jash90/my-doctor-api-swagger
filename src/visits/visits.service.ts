@@ -58,7 +58,7 @@ export class VisitsService {
         if (!doctor) {
             throw new HttpException("Doctor not found", HttpStatus.NOT_FOUND);
         }
-        
+
         let pantient = await this.pantientsRepository.findByPk(pantientId);
 
         if (!pantient) {
@@ -70,30 +70,27 @@ export class VisitsService {
         let dateVisit = await this.dateVisits(new Date(visitDay.toString()));
 
         if (dateVisit) {
-            throw new HttpException("Visit just already in schedule", HttpStatus.CONFLICT);
+            throw new HttpException("Wizyta w danym terminie istnieje.", HttpStatus.CONFLICT);
         }
-
-        let create = false;
 
         let schedules = await this.schedulesRepository.findAll({ where: { doctorId }, attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] } });
 
         if (schedules.length === 0) {
-            throw new HttpException("Doctor dont have schedule", HttpStatus.NOT_FOUND);
+            throw new HttpException("Doktor nie ma harmonogramu przyjeć.", HttpStatus.NOT_FOUND);
         }
 
         let schedule = schedules.find(schedule => schedule.dayOfWeek === visitDay.dayOfWeek().value());
         if (schedule) {
             const hourOpen = LocalTime.parse(schedule.hourOpen);
             const hourClose = LocalTime.parse(schedule.hourClose);
-            if (hourOpen.isBefore(visitDay.toLocalTime()) && hourClose.isAfter(visitDay.toLocalTime())) {
-                create = true;
+            if (!(hourOpen.isBefore(visitDay.toLocalTime()) && hourClose.isAfter(visitDay.toLocalTime()))) {
+                throw new HttpException("Doctor nie przyjmuje o danej godzinie.", HttpStatus.CONFLICT);
             }
+        } else {
+            throw new HttpException("Doctor nie przyjmuje danego dnia.", HttpStatus.CONFLICT);
         }
 
         try {
-            if (!create)
-                throw new HttpException("Visit just already in schedule", HttpStatus.CONFLICT);
-
             return await visit.save();
         } catch (err) {
             throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -151,7 +148,7 @@ export class VisitsService {
     }
 
     async freeVisit(doctorId: number): Promise<string[]> {
-        let freeDay: string[] = [];
+        let freeDay: string[] = ["test"];
         let schedules = await this.schedulesRepository.findAll({
             where: {
                 doctorId
@@ -159,7 +156,7 @@ export class VisitsService {
         });
         let now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
 
-        for (let index = 0; index < 14; index++) {
+        while (freeDay.length > 15) {
             const schedule = schedules.find((schedule) => schedule.dayOfWeek === now.dayOfWeek().value());
             let morning = now;
             if (schedule) {
@@ -181,8 +178,7 @@ export class VisitsService {
             }
             morning = morning.withHour(24);
         }
-        return freeDay;
-
+        return ["test"];
     }
 
     async search(doctorId: number): Promise<VisitDto[]> {
@@ -211,7 +207,8 @@ export class VisitsService {
     async doctorVisits(doctorId: number): Promise<VisitDto[]> {
         const visits = await this.visitsRepository.findAll<Visit>({
             where: { doctorId },
-            include: [Doctor, Pantient]
+            include: [Doctor, Pantient],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         return visits.map(visit => {
             return new VisitDto(visit);

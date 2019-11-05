@@ -23,7 +23,11 @@ import {
     createPantientDto1,
     createPantientDto5,
     createScheduleDto1,
-    createScheduleDto2
+    createScheduleDto2,
+    createScheduleDto3,
+    createVisitDto2,
+    createVisitDto3,
+    responseVisit
 } from './test-data';
 import { Doctor } from './../src/doctors/doctor.entity';
 import { Pantient } from './../src/pantients/pantient.entity';
@@ -64,95 +68,89 @@ describe('/', () => {
         await app.init();
     });
 
-    describe('/users', () => {
-        describe('POST /register', () => {
-            it('should return 400 if email is not valid', () => {
-                return request(app.getHttpServer())
-                    .post('/users/register')
-                    .send(createUserDto3)
-                    .expect(HttpStatus.BAD_REQUEST);
-            });
-
-            it('should return 400 if birthday is not ISO 8601 date string', () => {
-                return request(app.getHttpServer())
-                    .post('/users/register')
-                    .send(createUserDto4)
-                    .expect(HttpStatus.BAD_REQUEST);
-            });
-
-            it('should return 400 if gender is not a valid enum value', () => {
-                return request(app.getHttpServer())
-                    .post('/users/register')
-                    .send(createUserDto5)
-                    .expect(HttpStatus.BAD_REQUEST);
-            });
-
-            it('should return 400 if any of the required fields is missing', () => {
-                return request(app.getHttpServer())
-                    .post('/users/register')
-                    .send(createUserDto2)
-                    .expect(HttpStatus.BAD_REQUEST);
-            });
-
-            it('should return 201 if user is created', () => {
-                return request(app.getHttpServer())
-                    .post('/users/register')
-                    .send(createUserDto1)
-                    .expect(HttpStatus.CREATED)
-                    .expect(res => {
-                        userId = res.body.id;
-                        userLoginResponseDto1.id = res.body.id;
-                        userLoginResponseDto1.token = res.body.token;
-                        expect(res.body).toEqual(userLoginResponseDto1);
-                    });
-            });
-
-            it('should return 409 if user with given email already exists', () => {
-                return request(app.getHttpServer())
-                    .post('/users/register')
-                    .send(createUserDto1)
-                    .expect(HttpStatus.CONFLICT);
-            });
-        });
-
-        describe('POST /login', () => {
-            it('should return 200 and jwt token', () => {
-                return request(app.getHttpServer())
-                    .post('/users/login')
-                    .send(userLoginRequestDto1)
-                    .expect(HttpStatus.OK)
-                    .expect(res => {
-                        token = res.body.token;
-                        userLoginResponseDto1.id = res.body.id;
-                        userLoginResponseDto1.token = token;
-                        expect(res.body).toEqual(userLoginResponseDto1);
-                    });
-            });
-
-            it('should return 400 when user with given email not found', () => {
-                return request(app.getHttpServer())
-                    .post('/users/login')
-                    .send(userLoginRequestDto2)
-                    .expect(HttpStatus.BAD_REQUEST);
-            });
-
-            it('should return 400 when wrong password inserted', () => {
-                return request(app.getHttpServer())
-                    .post('/users/login')
-                    .send(userLoginRequestDto3)
-                    .expect(HttpStatus.BAD_REQUEST);
-            });
-            it('should return 400 when no data sent', () => {
-                return request(app.getHttpServer())
-                    .post('/users/login')
-                    .send({})
-                    .expect(HttpStatus.BAD_REQUEST);
-            });
-        });
-
-    });
-
     describe('/models', () => {
+
+        it('should return 400 if email is not valid', () => {
+            return request(app.getHttpServer())
+                .post('/users/register')
+                .send(createUserDto3)
+                .expect(HttpStatus.BAD_REQUEST);
+        });
+
+        it('should return 400 if birthday is not ISO 8601 date string', () => {
+            return request(app.getHttpServer())
+                .post('/users/register')
+                .send(createUserDto4)
+                .expect(HttpStatus.BAD_REQUEST);
+        });
+
+        it('should return 400 if gender is not a valid enum value', () => {
+            return request(app.getHttpServer())
+                .post('/users/register')
+                .send(createUserDto5)
+                .expect(HttpStatus.BAD_REQUEST);
+        });
+
+        it('should return 400 if any of the required fields is missing', () => {
+            return request(app.getHttpServer())
+                .post('/users/register')
+                .send(createUserDto2)
+                .expect(HttpStatus.BAD_REQUEST);
+        });
+
+        it('should return 201 if user is created', () => {
+            return request(app.getHttpServer())
+                .post('/users/register')
+                .send(createUserDto1)
+                .expect(HttpStatus.CREATED)
+                .expect(res => {
+                    userId = res.body.id;
+                    userLoginResponseDto1.id = res.body.id;
+                    userLoginResponseDto1.token = res.body.token;
+                    expect(res.body).toEqual(userLoginResponseDto1);
+                });
+        });
+
+        it('should return 409 if user with given email already exists', () => {
+            return request(app.getHttpServer())
+                .post('/users/register')
+                .send(createUserDto1)
+                .expect(HttpStatus.CONFLICT);
+        });
+
+        it('should return 200 and jwt token', () => {
+            return request(app.getHttpServer())
+                .post('/users/login')
+                .send(userLoginRequestDto1)
+                .expect(HttpStatus.OK)
+                .expect(res => {
+                    token = res.body.token;
+                    userLoginResponseDto1.id = res.body.id;
+                    userLoginResponseDto1.token = token;
+                    expect(res.body).toEqual(userLoginResponseDto1);
+                });
+        });
+
+        it('should return 400 when user with given email not found', () => {
+            return request(app.getHttpServer())
+                .post('/users/login')
+                .send(userLoginRequestDto2)
+                .expect(HttpStatus.BAD_REQUEST);
+        });
+
+        it('should return 400 when wrong password inserted', () => {
+            return request(app.getHttpServer())
+                .post('/users/login')
+                .send(userLoginRequestDto3)
+                .expect(HttpStatus.BAD_REQUEST);
+        });
+        it('should return 400 when no data sent', () => {
+            return request(app.getHttpServer())
+                .post('/users/login')
+                .send({})
+                .expect(HttpStatus.BAD_REQUEST);
+        });
+
         const loginUser = (token) => {
             return function (done) {
                 request(app.getHttpServer())
@@ -207,20 +205,41 @@ describe('/', () => {
                 .post('/schedules')
                 .set('Authorization', 'Bearer ' + token)
                 .send(createScheduleDto2)
-               // .expect(HttpStatus.CREATED)
-                .expect(res=>{
+                .expect(HttpStatus.CREATED)
+                .expect(res => {
                     let createSchedule: any = Object.assign({}, createScheduleDto2);
                     let { id, createdAt, updatedAt, deletedAt } = res.body;
                     createSchedule.id = id;
-                    createSchedule.doctorId= createScheduleDto2.doctorId.toString();
-                    createSchedule.hourOpen+=":00";
-                    createSchedule.hourClose+=":00";
+                    createSchedule.doctorId = createScheduleDto2.doctorId.toString();
+                    createSchedule.hourOpen += ":00";
+                    createSchedule.hourClose += ":00";
                     createSchedule.createdAt = createdAt;
                     createSchedule.updatedAt = updatedAt;
                     createSchedule.deletedAt = deletedAt;
                     expect(res.body).toEqual(createSchedule);
-                 });
+                });
         });
+
+        it('create visit', () => {
+            return request(app.getHttpServer())
+                .post('/visits')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createVisitDto2)
+                .expect(HttpStatus.CREATED)
+                .expect(res => {
+                    let createVisit: any = Object.assign({}, createVisitDto2);
+                    let { id, createdAt, updatedAt, deletedAt, doctorId, pantientId, date } = res.body;
+                    createVisit.id = id;
+                    createVisit.doctorId = doctorId.toString();
+                    createVisit.pantientId = pantientId.toString();
+                    createVisit.date = date.toString();
+                    createVisit.createdAt = createdAt;
+                    createVisit.updatedAt = updatedAt;
+                    createVisit.deletedAt = deletedAt;
+                    expect(res.body).toEqual(createVisit);
+                });
+        });
+
 
 
         it('create schedule with not found doctor', () => {
@@ -229,7 +248,7 @@ describe('/', () => {
                 .set('Authorization', 'Bearer ' + token)
                 .send(createScheduleDto1)
                 .expect(HttpStatus.NOT_FOUND)
-                .expect(res=>{
+                .expect(res => {
                     expect(res.body.message).toEqual("Doctor not found");
                 });
         });
@@ -242,18 +261,16 @@ describe('/', () => {
                 .expect(HttpStatus.BAD_REQUEST);
         });
 
-
-
-        // it('get list doctors', async () => {
-        //     return request(app.getHttpServer())
-        //         .get('/doctors')
-        //         .expect(HttpStatus.OK)
-        //         .expect(res => {
-        //             let createdDoctor: any = Object.assign({}, createDoctorDto1);
-        //             createdDoctor.id = res.body[0].id;
-        //             expect(res.body).toEqual([createdDoctor]);
-        //         });
-        // });
+        it('get list doctors', () => {
+            return request(app.getHttpServer())
+                .get('/doctors')
+                .expect(HttpStatus.OK)
+                .expect(res => {
+                    let createdDoctor: any = Object.assign({}, createDoctorDto1);
+                    createdDoctor.id = res.body[0].id;
+                    expect(res.body).toEqual([createdDoctor]);
+                });
+        });
 
         it('specialization enum validation', async () => {
             return request(app.getHttpServer())
@@ -277,86 +294,73 @@ describe('/', () => {
                 })
         });
 
-        // it('update doctor', () => {
-        //     return request(app.getHttpServer())
-        //         .put('/doctors/1')
-        //         .set('Authorization', 'Bearer ' + token)
-        //         .send(createDoctorDto2)
-        //         .expect(HttpStatus.OK)
-        //         .expect(res => {
-        //             let createdDoctor: any = Object.assign({}, createDoctorDto2);
-        //             createdDoctor.id = res.body.id;
-        //             expect(res.body).toEqual(createDoctorDto2);
-        //         });
-        //  });
+        it('add visit when doctor not accept', () => {
+            return request(app.getHttpServer())
+                .post('/visits')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createVisitDto3)
+                .expect(HttpStatus.CONFLICT)
+                .expect(res => {
+                    expect(res.body.message).toEqual("Doctor nie przyjmuje danego dnia.");
+                });
+        });
 
-        describe('POST', () => {
-        })
+        it('add schedule with incorrect dayOfWeek', () => {
+            return request(app.getHttpServer())
+                .post('/schedules')
+                .set('Authorization', 'Bearer ' + token)
+                .send(createScheduleDto3)
+                .expect(HttpStatus.BAD_REQUEST)
+                .expect(res => {
+                    expect(res.body.message[0].constraints.max).toEqual("dayOfWeek must not be greater than 7");
+                });
+        });
+
+        it('lista wizyt pacjenta', () => {
+            return request(app.getHttpServer())
+                .get('/visits/pantient/1')
+                .set('Authorization', 'Bearer ' + token)
+                .expect(HttpStatus.OK)
+                .expect(res => {
+                    responseVisit.id = res.body[0].id;
+                    expect(res.body).toEqual([responseVisit]);
+                });
+        });
+
+        it('pobranie wizyt i później pobranie danych pacjenta', () => {
+            return request(app.getHttpServer())
+                .get('/visits/doctor/1')
+                .set('Authorization', 'Bearer ' + token)
+                .expect(HttpStatus.OK)
+                .expect(res => {
+                    responseVisit.id = res.body[0].id;
+                    expect(res.body).toEqual([responseVisit]);
+                    request(app.getHttpServer())
+                        .get(`/pantients/${responseVisit.pantientId}`)
+                        .expect(HttpStatus.OK);
+                });
+        });
+
+        it('=====', () => {
+            return request(app.getHttpServer())
+                .get('/doctors')
+                .set('Authorization', 'Bearer ' + token)
+                .expect(HttpStatus.OK)
+                .expect(res => {
+                    request(app.getHttpServer())
+                        .get(`/visits/freeVisit/${res.body[0].id}`)
+                        .expect(HttpStatus.OK)
+                        .expect(res=>{
+                            expect(res.body).toEqual(null);
+                        })
+                });
+        });
+
+
+
+
 
     })
-
-    // describe('/pantients', () => {
-
-    //     describe('GET', () => {
-    //     })
-
-    //     describe('GET /{id}', () => {
-    //     })
-
-    //     describe('PUT /{id}', () => {
-    //     })
-
-    //     describe('POST', () => {
-    //     })
-
-    //     describe('DELETE /{id}', () => {
-    //     })
-
-    // })
-
-    // describe('/schedules', () => {
-
-    //     describe('GET', () => {
-    //     })
-
-    //     describe('GET /{id}', () => {
-    //     })
-
-    //     describe('PUT /{id}', () => {
-    //     })
-
-    //     describe('POST', () => {
-    //     })
-
-    //     describe('DELETE /{id}', () => {
-    //     })
-    // })
-
-    // describe('/visits', () => {
-
-    //     describe('GET', () => {
-    //     })
-
-    //     describe('GET /{id}', () => {
-    //     })
-
-    //     describe('GET /{doctorId}', () => {
-    //     })
-
-    //     describe('GET /{pantientid}', () => {
-    //     })
-
-    //     describe('PUT /{id}', () => {
-    //     })
-
-    //     describe('POST', () => {
-    //     })
-
-    //     describe('DELETE /{id}', () => {
-    //     })
-
-    // })
-
 
     afterAll(async done => {
         await app.close();
