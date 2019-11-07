@@ -83,7 +83,6 @@ export class VisitsService {
         if (schedule) {
             const hourOpen = LocalTime.parse(schedule.hourOpen);
             const hourClose = LocalTime.parse(schedule.hourClose);
-            console.log(hourOpen.equals(visitDay.toLocalTime()));
             if ((!hourOpen.equals(visitDay.toLocalTime()) && !hourClose.equals(visitDay.toLocalTime())) && !(hourOpen.isBefore(visitDay.toLocalTime()) && hourClose.isAfter(visitDay.toLocalTime()))) {
                 throw new HttpException("Doctor nie przyjmuje o danej godzinie.", HttpStatus.CONFLICT);
             }

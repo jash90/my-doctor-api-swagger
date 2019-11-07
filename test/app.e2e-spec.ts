@@ -73,35 +73,35 @@ describe('/', () => {
 
         it('should return 400 if email is not valid', () => {
             return request(app.getHttpServer())
-                .post('/users/register')
+                .post('/users')
                 .send(createUserDto3)
                 .expect(HttpStatus.BAD_REQUEST);
         });
 
         it('should return 400 if birthday is not ISO 8601 date string', () => {
             return request(app.getHttpServer())
-                .post('/users/register')
+                .post('/users')
                 .send(createUserDto4)
                 .expect(HttpStatus.BAD_REQUEST);
         });
 
         it('should return 400 if gender is not a valid enum value', () => {
             return request(app.getHttpServer())
-                .post('/users/register')
+                .post('/users')
                 .send(createUserDto5)
                 .expect(HttpStatus.BAD_REQUEST);
         });
 
         it('should return 400 if any of the required fields is missing', () => {
             return request(app.getHttpServer())
-                .post('/users/register')
+                .post('/users')
                 .send(createUserDto2)
                 .expect(HttpStatus.BAD_REQUEST);
         });
 
         it('should return 201 if user is created', () => {
             return request(app.getHttpServer())
-                .post('/users/register')
+                .post('/users')
                 .send(createUserDto1)
                 .expect(HttpStatus.CREATED)
                 .expect(res => {
@@ -114,14 +114,14 @@ describe('/', () => {
 
         it('should return 409 if user with given email already exists', () => {
             return request(app.getHttpServer())
-                .post('/users/register')
+                .post('/users')
                 .send(createUserDto1)
                 .expect(HttpStatus.CONFLICT);
         });
 
         it('should return 200 and jwt token', () => {
             return request(app.getHttpServer())
-                .post('/users/login')
+                .post('/users/auth')
                 .send(userLoginRequestDto1)
                 .expect(HttpStatus.OK)
                 .expect(res => {
@@ -134,20 +134,20 @@ describe('/', () => {
 
         it('should return 400 when user with given email not found', () => {
             return request(app.getHttpServer())
-                .post('/users/login')
+                .post('/users/auth')
                 .send(userLoginRequestDto2)
                 .expect(HttpStatus.BAD_REQUEST);
         });
 
         it('should return 400 when wrong password inserted', () => {
             return request(app.getHttpServer())
-                .post('/users/login')
+                .post('/users/auth')
                 .send(userLoginRequestDto3)
                 .expect(HttpStatus.BAD_REQUEST);
         });
         it('should return 400 when no data sent', () => {
             return request(app.getHttpServer())
-                .post('/users/login')
+                .post('/users/auth')
                 .send({})
                 .expect(HttpStatus.BAD_REQUEST);
         });
@@ -155,7 +155,7 @@ describe('/', () => {
         const loginUser = (token) => {
             return function (done) {
                 request(app.getHttpServer())
-                    .post('/users/login')
+                    .post('/users/auth')
                     .send(userLoginRequestDto1)
                     .expect(HttpStatus.OK)
                     .expect(200)
@@ -317,11 +317,14 @@ describe('/', () => {
 
         it('lista wizyt pacjenta', () => {
             return request(app.getHttpServer())
-                .get('/visits/pantient/1')
+                .get('/pantients/1/visits')
                 .set('Authorization', 'Bearer ' + token)
                 .expect(HttpStatus.OK)
                 .expect(res => {
-                    responseVisit.id = res.body[0].id;
+                    const { id, createdAt, updatedAt } = res.body[0];
+                    responseVisit.id = id;
+                    responseVisit.createdAt = createdAt;
+                    responseVisit.updatedAt = updatedAt;
                     expect(res.body).toEqual([responseVisit]);
                 });
         });
@@ -329,11 +332,14 @@ describe('/', () => {
         describe("case doctor", () => {
             it('pobranie wizyt', () => {
                 return request(app.getHttpServer())
-                    .get('/visits/doctor/1')
+                    .get('/doctors/1/visits')
                     .set('Authorization', 'Bearer ' + token)
                     .expect(HttpStatus.OK)
                     .expect(res => {
-                        responseVisit.id = res.body[0].id;
+                        const { id, createdAt, updatedAt } = res.body[0];
+                        responseVisit.id = id;
+                        responseVisit.createdAt = createdAt;
+                        responseVisit.updatedAt = updatedAt;
                         expect(res.body).toEqual([responseVisit]);
                     });
             });

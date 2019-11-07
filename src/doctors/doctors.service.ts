@@ -7,6 +7,7 @@ import { DoctorOffset } from './dto/doctor.offset';
 import { Visit } from '../visits/visit.entity';
 import { Schedule } from '../schedules/schedule.entity';
 import { VisitDto } from '../visits/dto/visit.dto';
+import { Pantient } from '../pantients/pantient.entity';
 
 @Injectable()
 export class DoctorsService {
@@ -102,7 +103,7 @@ export class DoctorsService {
 
     async doctorVisits(id: number): Promise<VisitDto[]> {
         const doctor = await this.doctorsRepository.findByPk<Doctor>(id, {
-            include: [Visit],
+            include: [{ model: Visit, include: [Doctor, Pantient] }],
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
         });
         return doctor.visits.map(visit => {

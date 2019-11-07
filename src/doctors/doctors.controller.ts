@@ -86,11 +86,11 @@ export class DoctorsController {
 
     @Get(':doctorId/visits')
     @ApiOkResponse({ type: [VisitDto] })
-    @ApiImplicitParam({ name: 'pantientId', required: true })
+    @ApiImplicitParam({ name: 'doctorId', required: true })
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     pantientVisits(
-        @Param('pantientId', new ParseIntPipe()) id: number,
+        @Param('doctorId', new ParseIntPipe()) id: number,
     ): Promise<VisitDto[]> {
         return this.doctorsService.doctorVisits(id);
     }
