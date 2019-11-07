@@ -25,7 +25,7 @@ import { PantientDto } from './dto/pantient.dto';
 import { Request } from 'express';
 import { UpdatePantientDto } from './dto/update-pantient.dto';
 import { PantientOffset } from './dto/pantient.offset';
-import { VisitDto } from 'src/visits/dto/visit.dto';
+import { VisitDto } from '../visits/dto/visit.dto';
 
 @Controller('pantients')
 @ApiUseTags('pantients')
