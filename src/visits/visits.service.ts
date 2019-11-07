@@ -83,7 +83,8 @@ export class VisitsService {
         if (schedule) {
             const hourOpen = LocalTime.parse(schedule.hourOpen);
             const hourClose = LocalTime.parse(schedule.hourClose);
-            if (!(hourOpen.isBefore(visitDay.toLocalTime()) && hourClose.isAfter(visitDay.toLocalTime()))) {
+            console.log(hourOpen.equals(visitDay.toLocalTime()));
+            if ((!hourOpen.equals(visitDay.toLocalTime()) && !hourClose.equals(visitDay.toLocalTime())) && !(hourOpen.isBefore(visitDay.toLocalTime()) && hourClose.isAfter(visitDay.toLocalTime()))) {
                 throw new HttpException("Doctor nie przyjmuje o danej godzinie.", HttpStatus.CONFLICT);
             }
         } else {
@@ -148,22 +149,21 @@ export class VisitsService {
     }
 
     async freeVisit(doctorId: number): Promise<string[]> {
-        let freeDay: string[] = ["test"];
+        let freeDay: string[] = [];
         let schedules = await this.schedulesRepository.findAll({
             where: {
                 doctorId
             }
         });
-        let now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
+        let morning = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
+        while (freeDay.length < 13) {
+            const schedule = schedules.find((schedule) => schedule.dayOfWeek === morning.dayOfWeek().value());
 
-        while (freeDay.length > 15) {
-            const schedule = schedules.find((schedule) => schedule.dayOfWeek === now.dayOfWeek().value());
-            let morning = now;
             if (schedule) {
                 const hourOpen = Number(schedule.hourOpen.replace(":00:00", ""));
                 const hourClose = Number(schedule.hourClose.replace(":00:00", ""));
                 for (let index = hourOpen; index < hourClose; index++) {
-                    morning = now.withHour(index);
+                    morning = morning.withHour(index);
                     let visit = await Visit.findOne({
                         where: {
                             doctorId,
@@ -176,9 +176,9 @@ export class VisitsService {
                     }
                 }
             }
-            morning = morning.withHour(24);
+            morning = morning.plusDays(1);
         }
-        return ["test"];
+        return freeDay;
     }
 
     async search(doctorId: number): Promise<VisitDto[]> {

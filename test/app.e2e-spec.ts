@@ -46,6 +46,7 @@ describe('/', () => {
         //     process.env.NODE_ENV = 'test';
         const module = await Test.createTestingModule({
             imports: [AppModule],
+
             providers: [
                 {
                     provide: 'SEQUELIZE',
@@ -240,8 +241,6 @@ describe('/', () => {
                 });
         });
 
-
-
         it('create schedule with not found doctor', () => {
             return request(app.getHttpServer())
                 .post('/schedules')
@@ -327,38 +326,109 @@ describe('/', () => {
                 });
         });
 
-        it('pobranie wizyt i później pobranie danych pacjenta', () => {
-            return request(app.getHttpServer())
-                .get('/visits/doctor/1')
-                .set('Authorization', 'Bearer ' + token)
-                .expect(HttpStatus.OK)
-                .expect(res => {
-                    responseVisit.id = res.body[0].id;
-                    expect(res.body).toEqual([responseVisit]);
-                    request(app.getHttpServer())
-                        .get(`/pantients/${responseVisit.pantientId}`)
-                        .expect(HttpStatus.OK);
-                });
-        });
+        describe("case doctor", () => {
+            it('pobranie wizyt', () => {
+                return request(app.getHttpServer())
+                    .get('/visits/doctor/1')
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(HttpStatus.OK)
+                    .expect(res => {
+                        responseVisit.id = res.body[0].id;
+                        expect(res.body).toEqual([responseVisit]);
+                    });
+            });
 
-        it('=====', () => {
-            return request(app.getHttpServer())
-                .get('/doctors')
-                .set('Authorization', 'Bearer ' + token)
-                .expect(HttpStatus.OK)
-                .expect(res => {
-                    request(app.getHttpServer())
-                        .get(`/visits/freeVisit/${res.body[0].id}`)
-                        .expect(HttpStatus.OK)
-                        .expect(res=>{
-                            expect(res.body).toEqual(null);
-                        })
-                });
-        });
+            it('pobranie danych pacjenta', () => {
+                return request(app.getHttpServer())
+                    .get(`/pantients/${responseVisit.pantientId}`)
+                    .expect(HttpStatus.OK)
+                    .expect(res => {
+                        expect(res.body.id).toEqual(responseVisit.pantientId);
+                    })
+            });
+        })
 
+        describe("case pantient", () => {
+            let doctorId;
+            let visitDate;
+            let visit;
 
+            it('get list doctors', () => {
+                return request(app.getHttpServer())
+                    .get('/doctors')
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(HttpStatus.OK)
+                    .expect(res => {
+                        doctorId = res.body[0].id;
+                    });
+            });
 
+            it('list free visit', () => {
+                return request(app.getHttpServer())
+                    .get(`/visits/freeVisit/${doctorId}`)
+                    .expect(HttpStatus.OK)
+                    .expect(res => {
+                        visitDate = res.body[0];
+                        expect(res.body.length).toEqual(14);
+                    })
+            });
 
+            it('create visit', () => {
+                return request(app.getHttpServer())
+                    .post(`/visits`)
+                    .set('Authorization', 'Bearer ' + token)
+                    .send({ doctorId: Number(doctorId), pantientId: 1, date: visitDate, description: "" })
+                    .expect(HttpStatus.CREATED)
+                    .expect(res => {
+                        visit = res.body;
+                    });
+            });
+
+            it('duplicate visit', () => {
+                return request(app.getHttpServer())
+                    .post(`/visits`)
+                    .set('Authorization', 'Bearer ' + token)
+                    .send({ doctorId: Number(doctorId), pantientId: 1, date: visitDate, description: "" })
+                    .expect(HttpStatus.CONFLICT)
+            });
+
+            it('visit exist', () => {
+                return request(app.getHttpServer())
+                    .get(`/visits/${visit.id}`)
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(HttpStatus.OK)
+                    .expect(res => {
+                        expect(res.body.doctorId).toEqual(doctorId);
+                        expect(res.body.date).toEqual(new Date(visitDate).toISOString());
+                    })
+            });
+        })
+
+        describe("remove visit", () => {
+            let visit;
+            it('list visit', () => {
+                return request(app.getHttpServer())
+                    .get(`/visits`)
+                    .expect(HttpStatus.OK)
+                    .expect(res => {
+                        visit = res.body[0];
+                    });
+            });
+
+            it('remove visit', () => {
+                return request(app.getHttpServer())
+                    .delete(`/visits/${visit.id}`)
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(HttpStatus.OK)
+            });
+
+            it('visit exist', () => {
+                return request(app.getHttpServer())
+                    .get(`/visits/${visit.id}`)
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(HttpStatus.NOT_FOUND)
+            });
+        })
 
     })
 
