@@ -15,7 +15,7 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { UserDto } from './dto/user.dto';
-import { ApiUseTags, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiUseTags, ApiOkResponse, ApiBearerAuth, ApiImplicitParam } from '@nestjs/swagger';
 import { UserLoginResponseDto } from './dto/user-login-response.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -26,7 +26,7 @@ import { UserOffset } from './dto/user.offset';
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    @Post('register')
+    @Post()
     @ApiOkResponse({ type: UserLoginResponseDto })
     register(
         @Body() createUserDto: CreateUserDto,
@@ -34,7 +34,7 @@ export class UsersController {
         return this.usersService.create(createUserDto);
     }
 
-    @Post('login')
+    @Post('auth')
     @HttpCode(200)
     @ApiOkResponse({ type: UserLoginResponseDto })
     login(
@@ -51,12 +51,13 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
-    @Get('me')
+    @Get(':id')
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @ApiOkResponse({ type: UserDto })
-    async getUser(@Req() request): Promise<UserDto> {
-        return this.usersService.getUser(request.user.id);
+    @ApiImplicitParam({ name: 'id', required: true })
+    async getUser(@Param('id', new ParseIntPipe()) id): Promise<UserDto> {
+        return this.usersService.getUser(id);
     }
 
     @Put('me')

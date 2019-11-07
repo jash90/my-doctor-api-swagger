@@ -203,30 +203,6 @@ export class VisitsService {
         });
     }
 
-
-    async doctorVisits(doctorId: number): Promise<VisitDto[]> {
-        const visits = await this.visitsRepository.findAll<Visit>({
-            where: { doctorId },
-            include: [Doctor, Pantient],
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        });
-        return visits.map(visit => {
-            return new VisitDto(visit);
-        });
-    }
-
-
-    async pantientVisits(pantientId: number): Promise<VisitDto[]> {
-        const visits = await this.visitsRepository.findAll<Visit>({
-            where: { pantientId },
-            include: [Doctor, Pantient],
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
-        });
-        return visits.map(visit => {
-            return new VisitDto(visit);
-        });
-    }
-
     async dateVisits(date: Date): Promise<Visit | null> {
         const visit = await this.visitsRepository.findOne<Visit>({
             where: { date },

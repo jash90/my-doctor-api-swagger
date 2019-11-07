@@ -25,6 +25,7 @@ import { PantientDto } from './dto/pantient.dto';
 import { Request } from 'express';
 import { UpdatePantientDto } from './dto/update-pantient.dto';
 import { PantientOffset } from './dto/pantient.offset';
+import { VisitDto } from 'src/visits/dto/visit.dto';
 
 @Controller('pantients')
 @ApiUseTags('pantients')
@@ -81,5 +82,16 @@ export class PantientsController {
     @ApiOkResponse({ type: PantientOffset})
     offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<PantientOffset> {
         return this.pantientsService.offset(index);
+    }
+
+    @Get(':pantientId/visits')
+    @ApiOkResponse({ type: [VisitDto] })
+    @ApiImplicitParam({ name: 'pantientId', required: true })
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    pantientVisits(
+        @Param('pantientId', new ParseIntPipe()) id: number,
+    ): Promise<VisitDto[]> {
+        return this.pantientsService.pantientVisits(id);
     }
 }

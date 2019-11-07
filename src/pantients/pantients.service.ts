@@ -5,6 +5,7 @@ import { PantientDto } from './dto/pantient.dto';
 import { UpdatePantientDto } from './dto/update-pantient.dto';
 import { PantientOffset } from './dto/pantient.offset';
 import { Visit } from '../visits/visit.entity';
+import { VisitDto } from '../visits/dto/visit.dto';
 
 @Injectable()
 export class PantientsService {
@@ -101,5 +102,15 @@ export class PantientsService {
         })
 
         return { rows: PantientDto, count: pantients.count };
+    }
+
+    async pantientVisits(id: number): Promise<VisitDto[]> {
+        const pantient = await this.pantientsRepository.findByPk<Pantient>(id,{
+            include: [Visit],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        });
+        return pantient.visits.map(visit => {
+            return new VisitDto(visit);
+        });
     }
 }

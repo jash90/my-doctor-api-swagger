@@ -25,6 +25,7 @@ import { DoctorDto } from './dto/doctor.dto';
 import { Request } from 'express';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { DoctorOffset } from './dto/doctor.offset';
+import { VisitDto } from '../visits/dto/visit.dto';
 
 @Controller('doctors')
 @ApiUseTags('doctors')
@@ -81,5 +82,16 @@ export class DoctorsController {
     @ApiOkResponse({ type: DoctorOffset})
     offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<DoctorOffset> {
         return this.doctorsService.offset(index);
+    }
+
+    @Get(':doctorId/visits')
+    @ApiOkResponse({ type: [VisitDto] })
+    @ApiImplicitParam({ name: 'pantientId', required: true })
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    pantientVisits(
+        @Param('pantientId', new ParseIntPipe()) id: number,
+    ): Promise<VisitDto[]> {
+        return this.doctorsService.doctorVisits(id);
     }
 }

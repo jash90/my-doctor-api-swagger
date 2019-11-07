@@ -96,27 +96,4 @@ export class VisitsController {
         return this.visitsService.search(doctorId);
     }
 
-    @Get('doctor/:doctorId')
-    @ApiOkResponse({ type: [VisitDto] })
-    @ApiImplicitParam({ name: 'doctorId', required: true })
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'))
-    doctorVisits(
-        @Param('doctorId', new ParseIntPipe()) id: number,
-    ): Promise<VisitDto[]> {
-        return this.visitsService.doctorVisits(id);
-    }
-
-    @Get('pantient/:pantientId')
-    @ApiOkResponse({ type: [VisitDto] })
-    @ApiImplicitParam({ name: 'pantientId', required: true })
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'))
-    pantientVisits(
-        @Param('pantientId', new ParseIntPipe()) id: number,
-    ): Promise<VisitDto[]> {
-        return this.visitsService.pantientVisits(id);
-    }
-
-
 }
