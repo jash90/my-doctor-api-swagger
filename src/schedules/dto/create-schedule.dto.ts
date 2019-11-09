@@ -1,5 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { IsString, MinLength, MaxLength, IsPhoneNumber, IsMilitaryTime, Max, Min, IsNumber, } from 'class-validator';
+import { IsMilitaryTime, IsNumber, Max, Min } from 'class-validator';
 
 export class CreateScheduleDto {
     @ApiModelProperty()

@@ -1,6 +1,6 @@
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-import { genSalt, hash, compare } from 'bcrypt';
+import { compare, genSalt, hash } from 'bcrypt';
 import { UserDto } from './dto/user.dto';
 import { UserLoginRequestDto } from './dto/user-login-request.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -25,7 +25,7 @@ export class UsersService {
 
     async findAll(): Promise<UserDto[]> {
         const users = await this.usersRepository.findAll<User>({
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         return users.map(user => {
             return new UserDto(user);
@@ -34,7 +34,7 @@ export class UsersService {
 
     async getUser(id: string): Promise<UserDto> {
         const user = await this.usersRepository.findByPk<User>(id, {
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         if (!user) {
             throw new HttpException(
@@ -49,7 +49,7 @@ export class UsersService {
     async getUserByEmail(email: string): Promise<User> {
         return await this.usersRepository.findOne<User>({
             where: { email },
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
     }
 
@@ -128,7 +128,7 @@ export class UsersService {
 
     async delete(id: string): Promise<UserDto> {
         const user = await this.usersRepository.findByPk<User>(id, {
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         await user.destroy();
         return new UserDto(user);
@@ -143,18 +143,17 @@ export class UsersService {
         return token;
     }
     async offset(index: number = 0): Promise<UserOffset> {
-        let users = await this.usersRepository.findAndCountAll({
+        const users = await this.usersRepository.findAndCountAll({
             limit: 100,
             offset: index * 100,
             order: ['id'],
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
 
-        let usersDto = users.rows.map(user => {
+        const usersDto = users.rows.map(user => {
             return new UserDto(user);
-        })
+        });
 
         return { rows: usersDto, count: users.count };
     }
 }
-

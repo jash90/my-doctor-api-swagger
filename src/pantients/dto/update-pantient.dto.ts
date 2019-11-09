@@ -1,5 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { Length, IsString, IsOptional, MinLength, MaxLength, IsPhoneNumber } from 'class-validator';
+import { IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class UpdatePantientDto {
     @IsOptional()
@@ -31,7 +31,7 @@ export class UpdatePantientDto {
 
     @IsOptional()
     @ApiModelProperty()
-    @IsPhoneNumber("PL")
+    @IsPhoneNumber('PL')
     readonly phone?: string;
 
     @IsOptional()

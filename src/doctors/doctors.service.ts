@@ -1,4 +1,4 @@
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { Doctor } from './doctor.entity';
 import { DoctorDto } from './dto/doctor.dto';
@@ -18,7 +18,7 @@ export class DoctorsService {
 
     async findAll(): Promise<DoctorDto[]> {
         const doctors = await this.doctorsRepository.findAll<Doctor>({
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         return doctors.map(doctor => {
             return new DoctorDto(doctor);
@@ -27,7 +27,7 @@ export class DoctorsService {
 
     async findOne(id: number): Promise<DoctorDto> {
         const doctor = await this.doctorsRepository.findByPk<Doctor>(id, {
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         if (!doctor) {
             throw new HttpException('No doctor found', HttpStatus.NOT_FOUND);
@@ -52,7 +52,7 @@ export class DoctorsService {
 
     private async getDoctor(id: number): Promise<Doctor> {
         const doctor = await this.doctorsRepository.findByPk<Doctor>(id, {
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         if (!doctor) {
             throw new HttpException('No doctor found', HttpStatus.NOT_FOUND);
@@ -86,17 +86,17 @@ export class DoctorsService {
     }
 
     async offset(index: number = 0): Promise<DoctorOffset> {
-        let doctors = await this.doctorsRepository.findAndCountAll({
+        const doctors = await this.doctorsRepository.findAndCountAll({
             include: [Visit, Schedule],
             limit: 100,
             offset: index * 100,
             order: ['id'],
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
 
-        let DoctorsDto = doctors.rows.map(doctor => {
+        const DoctorsDto = doctors.rows.map(doctor => {
             return new DoctorsDto(doctor);
-        })
+        });
 
         return { rows: DoctorsDto, count: doctors.count };
     }
@@ -104,7 +104,7 @@ export class DoctorsService {
     async doctorVisits(id: number): Promise<VisitDto[]> {
         const doctor = await this.doctorsRepository.findByPk<Doctor>(id, {
             include: [{ model: Visit, include: [Doctor, Pantient] }],
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         return doctor.visits.map(visit => {
             return new VisitDto(visit);

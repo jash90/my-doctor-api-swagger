@@ -21,5 +21,5 @@ export enum Specialist {
     reumatolog = 'reumatolog',
     nefrolog = 'nefrolog',
     hematolog = 'hematolog',
-    onkolog = 'onkolog'
+    onkolog = 'onkolog',
 }

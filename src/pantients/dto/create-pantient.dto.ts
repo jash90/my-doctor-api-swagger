@@ -1,5 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { IsString, MinLength, MaxLength, IsPhoneNumber, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreatePantientDto {
     @ApiModelProperty()
@@ -29,7 +29,7 @@ export class CreatePantientDto {
     readonly city: string;
 
     @ApiModelProperty()
-    @IsPhoneNumber("PL")
+    @IsPhoneNumber('PL')
     @IsNotEmpty()
     readonly phone: string;
 

@@ -1,4 +1,4 @@
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreatePantientDto } from './dto/create-pantient.dto';
 import { Pantient } from './pantient.entity';
 import { PantientDto } from './dto/pantient.dto';
@@ -17,7 +17,7 @@ export class PantientsService {
 
     async findAll(): Promise<PantientDto[]> {
         const pantients = await this.pantientsRepository.findAll<Pantient>({
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         return pantients.map(pantient => {
             return new PantientDto(pantient);
@@ -26,7 +26,7 @@ export class PantientsService {
 
     async findOne(id: number): Promise<PantientDto> {
         const pantient = await this.pantientsRepository.findByPk<Pantient>(id, {
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         if (!pantient) {
             throw new HttpException('No pantient found', HttpStatus.NOT_FOUND);
@@ -54,7 +54,7 @@ export class PantientsService {
 
     private async getPantient(id: number): Promise<Pantient> {
         const pantient = await this.pantientsRepository.findByPk<Pantient>(id, {
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         if (!pantient) {
             throw new HttpException('No pantient found', HttpStatus.NOT_FOUND);
@@ -90,25 +90,25 @@ export class PantientsService {
     }
 
     async offset(index: number = 0): Promise<PantientOffset> {
-        let pantients = await this.pantientsRepository.findAndCountAll({
+        const pantients = await this.pantientsRepository.findAndCountAll({
             include: [Visit],
             limit: 100,
             offset: index * 100,
             order: ['id'],
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
 
-        let PantientDto = pantients.rows.map(pantient => {
+        const PantientsDto = pantients.rows.map(pantient => {
             return new PantientDto(pantient);
-        })
+        });
 
-        return { rows: PantientDto, count: pantients.count };
+        return { rows: PantientsDto, count: pantients.count };
     }
 
     async pantientVisits(id: number): Promise<VisitDto[]> {
-        const pantient = await this.pantientsRepository.findByPk<Pantient>(id,{
-            include: [{model:Visit, include:[Doctor, Pantient]}],
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+        const pantient = await this.pantientsRepository.findByPk<Pantient>(id, {
+            include: [{ model: Visit, include: [Doctor, Pantient] }],
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         return pantient.visits.map(visit => {
             return new VisitDto(visit);

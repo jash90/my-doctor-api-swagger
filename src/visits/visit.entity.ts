@@ -1,23 +1,19 @@
 import {
-    Table,
-    PrimaryKey,
     AutoIncrement,
-    Column,
-    DataType,
-    Model,
-    ForeignKey,
-    Unique,
-    Length,
-    CreatedAt,
-    UpdatedAt,
-    DeletedAt,
     BelongsTo,
-    Min,
-    Max,
-    Validate
+    Column,
+    CreatedAt,
+    DataType,
+    DeletedAt,
+    ForeignKey,
+    Model,
+    PrimaryKey,
+    Table,
+    UpdatedAt,
 } from 'sequelize-typescript';
 import { Doctor } from '../doctors/doctor.entity';
 import { Pantient } from '../pantients/pantient.entity';
+
 @Table({
     tableName: 'visit',
 })

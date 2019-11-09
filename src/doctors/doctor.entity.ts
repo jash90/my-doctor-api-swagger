@@ -1,20 +1,18 @@
 import {
-    Table,
-    PrimaryKey,
     AutoIncrement,
     Column,
-    DataType,
-    Model,
-    ForeignKey,
-    Unique,
-    Length,
     CreatedAt,
-    UpdatedAt,
+    DataType,
     DeletedAt,
-    BelongsTo,
     HasMany,
+    Length,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique,
+    UpdatedAt,
 } from 'sequelize-typescript';
-import { Specialist, Gender } from '../shared/enum/enums';
+import { Specialist } from '../shared/enum/enums';
 import { Schedule } from '../schedules/schedule.entity';
 import { Visit } from '../visits/visit.entity';
 
@@ -41,7 +39,11 @@ export class Doctor extends Model<Doctor> {
     @Column({ field: 'last_name' })
     lastName: string;
 
-    @Column({ type: DataType.ENUM(['chirurg_ogólny', 'okulista', 'dermatolog', 'laryngolog', 'ginekolog', 'kardiolog', 'urolog', 'ortopeda', 'pulmonolog', 'neurolog', 'alergolog', 'gastrolog', 'diabetolog', 'endokrynolog', 'reumatolog', 'nefrolog', 'hematolog', 'onkolog']) })
+    @Column({
+        type: DataType.ENUM(
+            ['chirurg_ogólny', 'okulista', 'dermatolog', 'laryngolog', 'ginekolog', 'kardiolog', 'urolog', 'ortopeda', 'pulmonolog',
+                'neurolog', 'alergolog', 'gastrolog', 'diabetolog', 'endokrynolog', 'reumatolog', 'nefrolog', 'hematolog', 'onkolog']),
+    })
     specialization: Specialist;
 
     @CreatedAt

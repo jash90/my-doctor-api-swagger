@@ -1,4 +1,4 @@
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { Schedule } from './schedule.entity';
 import { ScheduleDto } from './dto/schedule.dto';
@@ -17,7 +17,7 @@ export class SchedulesService {
 
     async findAll(): Promise<ScheduleDto[]> {
         const schedules = await this.schedulesRepository.findAll<Schedule>({
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         return schedules.map(schedule => {
             return new ScheduleDto(schedule);
@@ -26,7 +26,7 @@ export class SchedulesService {
 
     async findOne(id: number): Promise<ScheduleDto> {
         const schedule = await this.schedulesRepository.findByPk<Schedule>(id, {
-            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
         if (!schedule) {
             throw new HttpException('No schedule found', HttpStatus.NOT_FOUND);
@@ -42,9 +42,9 @@ export class SchedulesService {
         schedule.hourOpen = createScheduleDto.hourOpen;
         schedule.hourClose = createScheduleDto.hourClose;
 
-        let doctor = await this.doctorsRepository.findByPk(createScheduleDto.doctorId);
+        const doctor = await this.doctorsRepository.findByPk(createScheduleDto.doctorId);
 
-        if (!doctor){
+        if (!doctor) {
             throw new HttpException('Doctor not found', HttpStatus.NOT_FOUND);
         }
 
@@ -74,9 +74,9 @@ export class SchedulesService {
         schedule.hourOpen = updateScheduleDto.hourOpen || schedule.hourOpen;
         schedule.hourClose = updateScheduleDto.hourClose || schedule.hourClose;
 
-        let doctor = this.doctorsRepository.findByPk(id);
+        const doctor = this.doctorsRepository.findByPk(id);
 
-        if (!doctor){
+        if (!doctor) {
             throw new HttpException('Doctor not found', HttpStatus.NOT_FOUND);
         }
 
@@ -96,10 +96,10 @@ export class SchedulesService {
     async search(doctorId: number): Promise<ScheduleDto[]> {
         const schedules = await this.schedulesRepository.findAll({
             where: {
-                doctorId
+                doctorId,
             },
-            attributes: { exclude: ['createdAt','updatedAt','deletedAt'] },
-            order: ['dayOfWeek']
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+            order: ['dayOfWeek'],
         });
 
         return schedules.map(schedule => {
@@ -108,18 +108,18 @@ export class SchedulesService {
     }
 
     async offset(index: number = 0): Promise<ScheduleOffset> {
-        let schedules = await this.schedulesRepository.findAndCountAll({
+        const schedules = await this.schedulesRepository.findAndCountAll({
             include: [Doctor],
             limit: 100,
             offset: index * 100,
             order: ['id'],
-            attributes: { exclude: ['createdAt','updatedAt','deletedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
 
-        let ScheduleDto = schedules.rows.map(schedules => {
-            return new ScheduleDto(schedules);
-        })
+        const SchedulesDto = schedules.rows.map(schedule => {
+            return new ScheduleDto(schedule);
+        });
 
-        return { rows: ScheduleDto, count: schedules.count };
+        return { rows: SchedulesDto, count: schedules.count };
     }
 }

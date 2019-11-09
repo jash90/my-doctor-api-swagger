@@ -1,6 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { Schedule } from '../schedule.entity';
-import { ScheduleDto } from '../dto/schedule.dto';
+import { ScheduleDto } from './schedule.dto';
 
 export class ScheduleOffset {
     @ApiModelProperty()

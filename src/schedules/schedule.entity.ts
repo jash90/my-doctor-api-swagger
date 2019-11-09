@@ -1,20 +1,17 @@
 import {
-    Table,
-    PrimaryKey,
     AutoIncrement,
-    Column,
-    DataType,
-    Model,
-    ForeignKey,
-    Unique,
-    Length,
-    CreatedAt,
-    UpdatedAt,
-    DeletedAt,
     BelongsTo,
-    Min,
+    Column,
+    CreatedAt,
+    DataType,
+    DeletedAt,
+    ForeignKey,
     Max,
-    Validate
+    Min,
+    Model,
+    PrimaryKey,
+    Table,
+    UpdatedAt,
 } from 'sequelize-typescript';
 import { Doctor } from '../doctors/doctor.entity';
 
@@ -30,7 +27,7 @@ export class Schedule extends Model<Schedule> {
     @ForeignKey(() => Doctor)
     @Column({ type: DataType.BIGINT, field: 'doctor_id' })
     doctorId: number;
-   
+
     @Min(1)
     @Max(7)
     @Column
