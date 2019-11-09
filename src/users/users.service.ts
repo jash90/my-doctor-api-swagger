@@ -139,8 +139,7 @@ export class UsersService {
             email: user.email,
         };
 
-        const token = sign(payload, this.jwtPrivateKey, {});
-        return token;
+        return sign(payload, this.jwtPrivateKey, {});
     }
     async offset(index: number = 0): Promise<UserOffset> {
         const users = await this.usersRepository.findAndCountAll({

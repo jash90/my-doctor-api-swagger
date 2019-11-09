@@ -1,6 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { User } from '../user.entity';
-import { UserDto } from '../dto/user.dto';
+import { UserDto } from './user.dto';
 
 export class UserOffset {
     @ApiModelProperty()

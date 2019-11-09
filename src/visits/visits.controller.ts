@@ -1,28 +1,10 @@
-import {
-    Controller,
-    Req,
-    Body,
-    Post,
-    UseGuards,
-    Get,
-    Param,
-    ParseIntPipe,
-    Delete,
-    Put,
-} from '@nestjs/common';
-import {
-    ApiUseTags,
-    ApiCreatedResponse,
-    ApiBearerAuth,
-    ApiOkResponse,
-    ApiImplicitParam,
-} from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiCreatedResponse, ApiImplicitParam, ApiOkResponse, ApiUseTags } from '@nestjs/swagger';
 import { CreateVisitDto } from './dto/create-visit.dto';
 import { VisitsService } from './visits.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Visit as VisitEntity } from './visit.entity';
 import { VisitDto } from './dto/visit.dto';
-import { Request } from 'express';
 import { UpdateVisitDto } from './dto/update-visit.dto';
 import { VisitOffset } from './dto/visit.offset';
 

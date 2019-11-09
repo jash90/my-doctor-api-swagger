@@ -1,4 +1,4 @@
-import { User } from './../user.entity';
+import { User } from '../user.entity';
 import { Gender } from '../../shared/enum/enums';
 import { ApiModelProperty } from '@nestjs/swagger';
 

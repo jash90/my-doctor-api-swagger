@@ -6,7 +6,7 @@ import { UpdateVisitDto } from './dto/update-visit.dto';
 import { LocalDateTime, LocalTime, nativeJs } from 'js-joda';
 import { Doctor } from '../doctors/doctor.entity';
 import { Pantient } from '../pantients/pantient.entity';
-import { VisitOffset } from '../visits/dto/visit.offset';
+import { VisitOffset } from './dto/visit.offset';
 import { Schedule } from '../schedules/schedule.entity';
 
 @Injectable()
@@ -208,12 +208,10 @@ export class VisitsService {
     }
 
     async dateVisits(date: Date): Promise<Visit | null> {
-        const visit = await this.visitsRepository.findOne<Visit>({
+        return await this.visitsRepository.findOne<Visit>({
             where: { date },
             include: [Doctor, Pantient],
             attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
         });
-
-        return visit;
     }
 }

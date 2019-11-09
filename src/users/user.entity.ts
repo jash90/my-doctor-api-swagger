@@ -1,15 +1,4 @@
-import {
-    Table,
-    Column,
-    Model,
-    Unique,
-    IsEmail,
-    DataType,
-    CreatedAt,
-    UpdatedAt,
-    DeletedAt,
-    HasMany,
-} from 'sequelize-typescript';
+import { Column, CreatedAt, DataType, DeletedAt, IsEmail, Model, Table, Unique, UpdatedAt } from 'sequelize-typescript';
 import { Gender } from '../shared/enum/enums';
 
 @Table({

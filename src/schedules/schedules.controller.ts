@@ -1,28 +1,10 @@
-import {
-    Controller,
-    Req,
-    Body,
-    Post,
-    UseGuards,
-    Get,
-    Param,
-    ParseIntPipe,
-    Delete,
-    Put,
-} from '@nestjs/common';
-import {
-    ApiUseTags,
-    ApiCreatedResponse,
-    ApiBearerAuth,
-    ApiOkResponse,
-    ApiImplicitParam,
-} from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiCreatedResponse, ApiImplicitParam, ApiOkResponse, ApiUseTags } from '@nestjs/swagger';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { SchedulesService } from './schedules.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Schedule as ScheduleEntity } from './schedule.entity';
 import { ScheduleDto } from './dto/schedule.dto';
-import { Request } from 'express';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import { ScheduleOffset } from './dto/schedules.offset';
 

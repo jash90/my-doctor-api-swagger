@@ -1,5 +1,4 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { IsString, Length, IsEnum, MinLength, MaxLength, IsPhoneNumber } from 'class-validator';
 import { Pantient } from '../pantient.entity';
 
 export class PantientDto {

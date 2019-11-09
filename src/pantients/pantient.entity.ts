@@ -1,18 +1,16 @@
 import {
-    Table,
-    PrimaryKey,
     AutoIncrement,
     Column,
-    DataType,
-    Model,
-    ForeignKey,
-    Unique,
-    Length,
     CreatedAt,
-    UpdatedAt,
+    DataType,
     DeletedAt,
-    BelongsTo,
     HasMany,
+    Length,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique,
+    UpdatedAt,
 } from 'sequelize-typescript';
 import { Visit } from '../visits/visit.entity';
 
