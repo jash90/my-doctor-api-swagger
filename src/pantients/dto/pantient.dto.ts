@@ -6,10 +6,10 @@ export class PantientDto {
     readonly id: number;
 
     @ApiModelProperty()
-    readonly firstName: string;
+    readonly firstname: string;
 
     @ApiModelProperty()
-    readonly lastName: string;
+    readonly lastname: string;
 
     @ApiModelProperty()
     readonly postcode: string;
@@ -34,8 +34,8 @@ export class PantientDto {
 
     constructor(pantient: Pantient) {
         this.id = pantient.id;
-        this.firstName = pantient.firstName;
-        this.lastName = pantient.lastName;
+        this.firstname = pantient.firstname;
+        this.lastname = pantient.lastname;
         this.postcode = pantient.postcode;
         this.street = pantient.street;
         this.city = pantient.city;

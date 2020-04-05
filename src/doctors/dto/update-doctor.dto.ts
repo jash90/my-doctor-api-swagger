@@ -12,12 +12,12 @@ export class UpdateDoctorDto {
     @IsOptional()
     @ApiModelProperty()
     @IsString()
-    readonly firstName?: string;
+    readonly firstname?: string;
 
     @IsOptional()
     @ApiModelProperty()
     @IsString()
-    readonly lastName?: string;
+    readonly lastname?: string;
 
     @IsOptional()
     @ApiModelProperty()

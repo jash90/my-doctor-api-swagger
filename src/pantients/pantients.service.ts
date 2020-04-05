@@ -37,8 +37,8 @@ export class PantientsService {
 
     async create(createPantientDto: CreatePantientDto): Promise<Pantient> {
         const pantient = new Pantient();
-        pantient.firstName = createPantientDto.firstName;
-        pantient.lastName = createPantientDto.lastName;
+        pantient.firstname = createPantientDto.firstname;
+        pantient.lastname = createPantientDto.lastname;
         pantient.postcode = createPantientDto.postcode;
         pantient.street = createPantientDto.street;
         pantient.city = createPantientDto.city;
@@ -69,8 +69,8 @@ export class PantientsService {
     ): Promise<Pantient> {
         const pantient = await this.getPantient(id);
 
-        pantient.firstName = updatePantientDto.firstName || pantient.firstName;
-        pantient.lastName = updatePantientDto.lastName || pantient.lastName;
+        pantient.firstname = updatePantientDto.firstname || pantient.firstname;
+        pantient.lastname = updatePantientDto.lastname || pantient.lastname;
         pantient.postcode = updatePantientDto.postcode || pantient.postcode;
         pantient.street = updatePantientDto.street || pantient.street;
         pantient.city = updatePantientDto.city || pantient.city;

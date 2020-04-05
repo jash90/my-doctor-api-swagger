@@ -12,8 +12,8 @@ import { CreateVisitDto } from '../src/visits/dto/create-visit.dto';
 export const createUserDto1: CreateUserDto = {
     email: 'testemail@gmail.com',
     password: 'password123',
-    firstName: 'John',
-    lastName: 'Smith',
+    firstname: 'John',
+    lastname: 'Smith',
     gender: Gender.male,
     birthday: '1986-07-17',
 };
@@ -21,7 +21,7 @@ export const createUserDto1: CreateUserDto = {
 export const createUserDto2 = {
     email: 'testemail@gmail.com',
     password: 'password123',
-    lastName: 'Smith',
+    lastname: 'Smith',
     gender: Gender.male,
     birthday: '1986-07-17',
 };
@@ -59,8 +59,8 @@ export const userLoginRequestDto3: UserLoginRequestDto = {
 export const userDto1: UserDto = {
     id: 'uuid/v4',
     email: 'testemail@gmail.com',
-    firstName: 'John',
-    lastName: 'Smith',
+    firstname: 'John',
+    lastname: 'Smith',
     gender: Gender.male,
     birthday: '1986-07-17',
 };
@@ -83,36 +83,36 @@ export const userDto2: UserDto = {
 
 export const createDoctorDto1: CreateDoctorDto = {
     numberPwz: '1234567',
-    firstName: 'Zbigniew',
-    lastName: 'Stonoga',
+    firstname: 'Zbigniew',
+    lastname: 'Stonoga',
     specialization: Specialist.urolog
 };
 
 export const createDoctorDto2: CreateDoctorDto = {
     numberPwz: '14882137',
-    firstName: 'Mark',
-    lastName: 'Sloan',
+    firstname: 'Mark',
+    lastname: 'Sloan',
     specialization: Specialist.chirurg_ogólny,
 };
 
 export const createDoctorDto3: any = {
     numberPwz: '7654321',
-    firstName: 'Alfred',
-    lastName: 'Zygrfryd',
+    firstname: 'Alfred',
+    lastname: 'Zygrfryd',
     specialization: 'test',
 };
 
 export const createDoctorDto4: CreateDoctorDto = {
     numberPwz: '1234568',
-    firstName: 'Zorak',
-    lastName: 'Zorakowsi',
+    firstname: 'Zorak',
+    lastname: 'Zorakowsi',
     specialization: Specialist.dermatolog,
 };
 
 
 export const createPantientDto1: CreatePantientDto = {
-    firstName: 'Sweet',
-    lastName: 'Johnson',
+    firstname: 'Sweet',
+    lastname: 'Johnson',
     postcode: 'SE-3PG',
     street: 'Grove Street',
     city: 'San Andreas',
@@ -121,8 +121,8 @@ export const createPantientDto1: CreatePantientDto = {
 };
 
 export const createPantientDto2: CreatePantientDto = {
-    firstName: 'Carl',
-    lastName: 'Johnson',
+    firstname: 'Carl',
+    lastname: 'Johnson',
     postcode: 'SE-3PG',
     street: 'Grove Street',
     city: 'San Andreas',
@@ -131,8 +131,8 @@ export const createPantientDto2: CreatePantientDto = {
 };
 
 export const createPantientDto3: CreatePantientDto = {
-    firstName: 'Ayn',
-    lastName: 'Rand',
+    firstname: 'Ayn',
+    lastname: 'Rand',
     postcode: '10-001',
     street: 'Kensico Cemetery Valhalla',
     city: 'New York',
@@ -141,8 +141,8 @@ export const createPantientDto3: CreatePantientDto = {
 };
 
 export const createPantientDto4: CreatePantientDto = {
-    firstName: 'Ludwig',
-    lastName: 'von Misses',
+    firstname: 'Ludwig',
+    lastname: 'von Misses',
     postcode: '89-ABC',
     street: 'Captializm Street',
     city: 'Wien',
@@ -151,8 +151,8 @@ export const createPantientDto4: CreatePantientDto = {
 };
 
 export const createPantientDto5: CreatePantientDto = {
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     postcode: '',
     street: '',
     city: '',
@@ -247,10 +247,10 @@ export const createVisitDto3: CreateVisitDto = {
 export const responseVisit: any = {
     date: "2019-11-06T12:20:57.000Z",
     description: "consultation",
-    doctorFirstName: "Zbigniew",
+    doctorfirstname: "Zbigniew",
     doctorId: "1",
-    doctorLastName: "Stonoga",
-    pantientFirstName: "Sweet",
+    doctorLastname: "Stonoga",
+    pantientfirstname: "Sweet",
     pantientId: "1",
-    pantientLastName: "Johnson",
+    pantientLastname: "Johnson",
 };

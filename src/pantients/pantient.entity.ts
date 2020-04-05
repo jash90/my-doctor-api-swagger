@@ -24,10 +24,10 @@ export class Pantient extends Model<Pantient> {
     id: number;
 
     @Column({ field: 'first_name' })
-    firstName: string;
+    firstname: string;
 
     @Column({ field: 'last_name' })
-    lastName: string;
+    lastname: string;
 
     @Length({
         min: 6, max: 6,

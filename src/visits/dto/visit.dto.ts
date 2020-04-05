@@ -9,19 +9,19 @@ export class VisitDto {
     readonly doctorId: number;
 
     @ApiModelProperty()
-    readonly doctorFirstName: string;
+    readonly doctorfirstname: string;
 
     @ApiModelProperty()
-    readonly doctorLastName: string;
+    readonly doctorLastname: string;
 
     @ApiModelProperty()
     readonly pantientId: number;
 
     @ApiModelProperty()
-    readonly pantientFirstName: string;
+    readonly pantientfirstname: string;
 
     @ApiModelProperty()
-    readonly pantientLastName: string;
+    readonly pantientLastname: string;
 
     @ApiModelProperty()
     readonly date: Date;
@@ -38,11 +38,11 @@ export class VisitDto {
     constructor(visit: Visit) {
         this.id = visit.id;
         this.doctorId = visit.doctorId;
-        this.doctorFirstName = visit.doctor.firstName;
-        this.doctorLastName = visit.doctor.lastName;
+        this.doctorfirstname = visit.doctor.firstname;
+        this.doctorLastname = visit.doctor.lastname;
         this.pantientId = visit.pantientId;
-        this.pantientFirstName = visit.pantient.firstName;
-        this.pantientLastName = visit.pantient.lastName;
+        this.pantientfirstname = visit.pantient.firstname;
+        this.pantientLastname = visit.pantient.lastname;
         this.date = visit.date;
         this.description = visit.description;
         this.createdAt = visit.createdAt;

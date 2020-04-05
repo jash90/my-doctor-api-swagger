@@ -5,12 +5,12 @@ export class CreatePantientDto {
     @ApiModelProperty()
     @IsString()
     @IsNotEmpty()
-    readonly firstName: string;
+    readonly firstname: string;
 
     @ApiModelProperty()
     @IsString()
     @IsNotEmpty()
-    readonly lastName: string;
+    readonly lastname: string;
 
     @ApiModelProperty()
     @IsString()

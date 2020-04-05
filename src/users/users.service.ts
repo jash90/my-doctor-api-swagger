@@ -57,8 +57,8 @@ export class UsersService {
         try {
             const user = new User();
             user.email = createUserDto.email.trim().toLowerCase();
-            user.firstName = createUserDto.firstName;
-            user.lastName = createUserDto.lastName;
+            user.firstname = createUserDto.firstname;
+            user.lastname = createUserDto.lastname;
             user.gender = createUserDto.gender;
             user.birthday = createUserDto.birthday;
 
@@ -113,8 +113,8 @@ export class UsersService {
             throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
         }
 
-        user.firstName = updateUserDto.firstName || user.firstName;
-        user.lastName = updateUserDto.lastName || user.lastName;
+        user.firstname = updateUserDto.firstname || user.firstname;
+        user.lastname = updateUserDto.lastname || user.lastname;
         user.gender = updateUserDto.gender || user.gender;
         user.birthday = updateUserDto.birthday || user.birthday;
 

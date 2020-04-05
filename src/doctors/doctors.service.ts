@@ -39,8 +39,8 @@ export class DoctorsService {
     async create(createDoctorDto: CreateDoctorDto): Promise<Doctor> {
         const doctor = new Doctor();
         doctor.numberPwz = createDoctorDto.numberPwz;
-        doctor.firstName = createDoctorDto.firstName;
-        doctor.lastName = createDoctorDto.lastName;
+        doctor.firstname = createDoctorDto.firstname;
+        doctor.lastname = createDoctorDto.lastname;
         doctor.specialization = createDoctorDto.specialization;
 
         try {
@@ -68,8 +68,8 @@ export class DoctorsService {
         const doctor = await this.getDoctor(id);
 
         doctor.numberPwz = updateDoctorDto.numberPwz || doctor.numberPwz;
-        doctor.firstName = updateDoctorDto.firstName || doctor.firstName;
-        doctor.lastName = updateDoctorDto.lastName || doctor.lastName;
+        doctor.firstname = updateDoctorDto.firstname || doctor.firstname;
+        doctor.lastname = updateDoctorDto.lastname || doctor.lastname;
         doctor.specialization = updateDoctorDto.specialization || doctor.specialization;
 
         try {
@@ -95,7 +95,7 @@ export class DoctorsService {
         });
 
         const DoctorsDto = doctors.rows.map(doctor => {
-            return new DoctorsDto(doctor);
+            return new DoctorDto(doctor);
         });
 
         return { rows: DoctorsDto, count: doctors.count };

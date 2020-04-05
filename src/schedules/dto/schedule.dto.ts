@@ -9,10 +9,10 @@ export class ScheduleDto {
     readonly doctorId: number;
 
     @ApiModelProperty()
-    readonly doctorFirstName: string;
+    readonly doctorFirstname: string;
 
     @ApiModelProperty()
-    readonly doctorLastName: string;
+    readonly doctorLastname: string;
 
     @ApiModelProperty()
     readonly dayOfWeek: number;
@@ -32,8 +32,8 @@ export class ScheduleDto {
     constructor(schedule: Schedule) {
         this.id = schedule.id;
         this.doctorId = schedule.doctorId;
-        this.doctorFirstName = schedule.doctor.firstName;
-        this.doctorLastName = schedule.doctor.lastName;
+        this.doctorFirstname = schedule.doctor.firstname;
+        this.doctorLastname = schedule.doctor.lastname;
         this.dayOfWeek = schedule.dayOfWeek;
         this.hourOpen = schedule.hourOpen;
         this.hourClose = schedule.hourClose;

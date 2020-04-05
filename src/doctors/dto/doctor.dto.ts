@@ -10,10 +10,10 @@ export class DoctorDto {
     readonly numberPwz: string;
 
     @ApiModelProperty()
-    readonly firstName: string;
+    readonly firstname: string;
 
     @ApiModelProperty()
-    readonly lastName: string;
+    readonly lastname: string;
 
     @ApiModelProperty()
     readonly specialization: Specialist;
@@ -27,8 +27,8 @@ export class DoctorDto {
     constructor(doctor: Doctor) {
         this.id = doctor.id;
         this.numberPwz = doctor.numberPwz;
-        this.firstName = doctor.firstName;
-        this.lastName = doctor.lastName;
+        this.firstname = doctor.firstname;
+        this.lastname = doctor.lastname;
         this.specialization = doctor.specialization;
         this.createdAt = doctor.createdAt;
         this.updatedAt = doctor.updatedAt;
