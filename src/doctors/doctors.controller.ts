@@ -60,9 +60,9 @@ export class DoctorsController {
         return this.doctorsService.delete(id);
     }
 
-    @Get(':id')
-    @ApiOkResponse({ type: DoctorOffset})
-    offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<DoctorOffset> {
+    @Get('offset/:id')
+    @ApiOkResponse({ type: DoctorOffset })
+    offset(@Param('id', new ParseIntPipe()) index: number = 0): Promise<DoctorOffset> {
         return this.doctorsService.offset(index);
     }
 

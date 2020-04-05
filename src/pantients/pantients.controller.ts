@@ -60,9 +60,9 @@ export class PantientsController {
         return this.pantientsService.delete(id);
     }
 
-    @Get(':id')
-    @ApiOkResponse({ type: PantientOffset})
-    offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<PantientOffset> {
+    @Get('offset/:id')
+    @ApiOkResponse({ type: PantientOffset })
+    offset(@Param('id', new ParseIntPipe()) index: number = 0): Promise<PantientOffset> {
         return this.pantientsService.offset(index);
     }
 

@@ -59,16 +59,16 @@ export class SchedulesController {
         return this.schedulesService.delete(id);
     }
 
-    @Get(':id')
+    @Get('search/:id')
     @ApiOkResponse({ type: ScheduleDto })
     @ApiImplicitParam({ name: 'id', required: true })
     search(@Param('id', new ParseIntPipe()) id: number): Promise<ScheduleDto[]> {
         return this.schedulesService.search(id);
     }
 
-    @Get(':id')
-    @ApiOkResponse({ type: ScheduleOffset})
-    offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<ScheduleOffset> {
+    @Get('offset/:id')
+    @ApiOkResponse({ type: ScheduleOffset })
+    offset(@Param('id', new ParseIntPipe()) index: number = 0): Promise<ScheduleOffset> {
         return this.schedulesService.offset(index);
     }
 }

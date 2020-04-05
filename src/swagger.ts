@@ -8,6 +8,7 @@ export function setupSwagger(app: INestApplication) {
         .setContactEmail('makrzywd@metal.agh.edu.pl')
         .setDescription('API Documentation')
         .setVersion('1.1')
+        .setSchemes("https", "http")
         .addBearerAuth()
         .build();
 

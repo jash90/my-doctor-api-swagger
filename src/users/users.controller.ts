@@ -12,7 +12,7 @@ import { UserOffset } from './dto/user.offset';
 @Controller('users')
 @ApiUseTags('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) { }
 
     @Post()
     @ApiOkResponse({ type: UserLoginResponseDto })
@@ -67,9 +67,9 @@ export class UsersController {
         return this.usersService.delete(request.user.id);
     }
 
-    @Get(':id')
-    @ApiOkResponse({ type: UserOffset})
-    offset(@Param('id', new ParseIntPipe()) index: number= 0): Promise<UserOffset> {
+    @Get('offset/:id')
+    @ApiOkResponse({ type: UserOffset })
+    offset(@Param('id', new ParseIntPipe()) index: number = 0): Promise<UserOffset> {
         return this.usersService.offset(index);
     }
 }
